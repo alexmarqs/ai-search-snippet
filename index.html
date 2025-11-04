@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search and Chat Snippet Library - Demo</title>
+    <style>
+        :root {
+            /* Light mode colors */
+            --bg-primary: oklch(0.985 0 0);
+            --bg-secondary: #ffffff;
+            --bg-surface: #f8f9fa;
+            --text-primary: rgb(49, 49, 49);
+            --text-secondary: oklch(0.556 0 0);
+            --text-muted: #666;
+            --border-color: oklab(0.145 0 0 / 0.1);
+            --shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.145 0 0 / 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+            --feature-bg: #f8f9fa;
+            --feature-border: #667eea;
+        }
+
+        [data-theme="dark"] {
+            /* Dark mode colors */
+            --bg-primary: #0f1419;
+            --bg-secondary: #1a1b1e;
+            --bg-surface: #25262b;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-muted: #909296;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+            --code-bg: #0d1117;
+            --code-text: #e6edf3;
+            --feature-bg: #2c2e33;
+            --feature-border: #4dabf7;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-rows: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .demo-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            transition: background-color 0.3s ease;
+        }
+
+        .demo-card h2 {
+            margin: 0 0 16px 0;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .demo-card p {
+            margin: 0 0 20px 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+
+        /* Custom theme for demo widgets */
+        chat-bubble-snippet {
+            --search-snippet-primary-color: #F6821F;
+            --search-snippet-primary-hover: #FBAD41;
+        }
+
+        .features {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            transition: background-color 0.3s ease;
+        }
+
+        .features h2 {
+            margin: 0 0 24px 0;
+            font-size: 2rem;
+            color: var(--text-primary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .feature {
+            padding: 16px;
+            border-left: 4px solid var(--feature-border);
+            background: var(--feature-bg);
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .feature h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .feature p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .code-example {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            transition: background-color 0.3s ease;
+        }
+
+        .code-example h2 {
+            margin: 0 0 16px 0;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+        }
+
+        code {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 20px;
+            opacity: 0.8;
+        }
+
+        /* Configurator Styles */
+        .configurator-wrapper {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            transition: background-color 0.3s ease;
+        }
+
+        .configurator-wrapper h2 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 2rem;
+            color: var(--text-primary);
+        }
+
+        .configurator-container {
+            margin-top: 24px;
+        }
+
+        .config-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .config-tab {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-muted);
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .config-tab:hover {
+            color: #2563eb;
+        }
+
+        .config-tab.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+        }
+
+        .config-content {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 24px;
+            min-height: 600px;
+        }
+
+        .config-panel {
+            background: var(--feature-bg);
+            border-radius: 12px;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 800px;
+        }
+
+        .config-actions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .config-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .config-btn:hover {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .config-section {
+            margin-bottom: 24px;
+        }
+
+        .config-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            padding-left: 12px;
+            border-left: 4px solid #2563eb;
+        }
+
+        .config-category {
+            margin-bottom: 20px;
+        }
+
+        .config-category-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .config-item {
+            margin-bottom: 16px;
+            background: var(--bg-secondary);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .config-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-primary);
+            font-family: monospace;
+        }
+
+        .config-description {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .config-input,
+        .config-select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+        }
+
+        .config-input:focus,
+        .config-select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .config-input[type="color"] {
+            height: 40px;
+            padding: 4px;
+            cursor: pointer;
+        }
+
+        .config-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .config-checkbox input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .preview-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .preview-section {
+            background: var(--feature-bg);
+            border-radius: 12px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .preview-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .preview-container {
+            background: var(--bg-secondary);
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 300px;
+        }
+
+        .code-section {
+            background: var(--code-bg);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .code-section .preview-title {
+            color: var(--code-text);
+        }
+
+        .code-output {
+            background: transparent;
+            margin: 0;
+            padding: 0;
+            color: var(--code-text);
+            font-size: 12px;
+            line-height: 1.6;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 1024px) {
+            .config-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <span class="theme-icon" id="themeIcon">🌙</span>
+                <span id="themeText">Dark</span>
+            </button>
+            <h1>🔍 Search and Chat Snippet Library</h1>
+            <p>Production-ready Web Component for Search & Chat</p>
+        </div>
+
+
+        <!-- Demo Widgets -->
+        <div class="demo-grid">
+            <!-- Search Bar Snippet -->
+            <div class="demo-card">
+                <h2>🔎 Search Bar</h2>
+                <p><strong>Inline search widget</strong> - Search bar with real-time results display. Perfect for
+                    embedding in pages.</p>
+                <search-bar-snippet api-url="https://docs-website-nlweb.developer-docs-autorag.workers.dev/"
+                    placeholder="Search for information..." max-results="5" debounce-ms="300" client="nlweb">
+                </search-bar-snippet>
+            </div>
+            <div class="demo-card">
+                <h2>Full page chat</h2>
+                <p><strong>Full page chat</strong> - Full page chat widget with real-time results display. Perfect for
+                    embedding in pages.</p>
+                <chat-page-snippet api-url="https://docs-website-nlweb.developer-docs-autorag.workers.dev/"
+                    placeholder="Search for information..." max-results="5" debounce-ms="300" client="nlweb">
+                </chat-page-snippet>
+            </div>
+        </div>
+
+        <!-- Chat Bubble Widget (Fixed Position) -->
+        <chat-bubble-snippet api-url="https://docs-website-nlweb.developer-docs-autorag.workers.dev/"
+            placeholder="Ask me anything..." enable-streaming="true" client="nlweb" theme="light">
+        </chat-bubble-snippet>
+
+        <!-- Features -->
+        <div class="features">
+            <h2>✨ Key Features</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <h3>🎨 Fully Customizable</h3>
+                    <p>20+ CSS variables for complete theme control</p>
+                </div>
+                <div class="feature">
+                    <h3>⚡ Zero Dependencies</h3>
+                    <p>Self-contained with everything bundled</p>
+                </div>
+                <div class="feature">
+                    <h3>📱 Responsive Design</h3>
+                    <p>Works seamlessly on all devices</p>
+                </div>
+                <div class="feature">
+                    <h3>🎭 Framework Agnostic</h3>
+                    <p>Native Web Components work everywhere</p>
+                </div>
+                <div class="feature">
+                    <h3>♿ Accessible</h3>
+                    <p>WCAG 2.1 AA compliant with ARIA support</p>
+                </div>
+                <div class="feature">
+                    <h3>🚀 Streaming Support</h3>
+                    <p>Real-time streaming responses with low latency</p>
+                </div>
+                <div class="feature">
+                    <h3>🌓 Dark Mode</h3>
+                    <p>Automatic theme switching based on system preferences</p>
+                </div>
+                <div class="feature">
+                    <h3>📦 Tiny Bundle</h3>
+                    <p>Optimized for minimal size and maximum performance</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Configurator -->
+        <div class="configurator-wrapper">
+            <h2>🎨 Interactive Configurator</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 20px;">Customize your snippets with props and CSS
+                variables</p>
+
+            <div class="configurator-container">
+                <!-- Tabs -->
+                <div class="config-tabs">
+                    <button class="config-tab active" data-snippet="search-bar">Search Bar</button>
+                    <button class="config-tab" data-snippet="chat-bubble">Chat Bubble</button>
+                    <button class="config-tab" data-snippet="chat-page">Chat Page</button>
+                </div>
+
+                <div class="config-content">
+                    <!-- Left Panel: Configuration Options -->
+                    <div class="config-panel">
+                        <div class="config-actions">
+                            <button class="config-btn" id="resetBtn">Reset</button>
+                            <button class="config-btn" id="copyBtn">Copy Code</button>
+                        </div>
+
+                        <!-- Props Section -->
+                        <div class="config-section">
+                            <h3 class="config-section-title">Props</h3>
+                            <div id="propsContainer"></div>
+                        </div>
+
+                        <!-- CSS Variables Section -->
+                        <div class="config-section">
+                            <h3 class="config-section-title">CSS Variables</h3>
+                            <div id="cssVarsContainer"></div>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel: Preview & Code -->
+                    <div class="preview-panel">
+                        <div class="preview-section">
+                            <h3 class="preview-title">Live Preview</h3>
+                            <div id="previewContainer" class="preview-container"></div>
+                        </div>
+
+                        <div class="code-section">
+                            <h3 class="preview-title">Generated Code</h3>
+                            <pre class="code-output"><code id="generatedCode"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage Example -->
+        <div class="code-example">
+            <h2>📖 Quick Start</h2>
+            <pre><code>&lt;!-- Import the library --&gt;
+&lt;script type="module" src="https://cdn.example.com/search-snippet.es.js"&gt;&lt;/script&gt;
+
+&lt;!-- 1. Chat Bubble Widget (Fixed bottom-right) --&gt;
+&lt;chat-bubble-snippet 
+    api-url="https://api.example.com"
+    enable-streaming="true"&gt;
+&lt;/chat-bubble-snippet&gt;
+
+&lt;!-- 2. Search Bar Widget --&gt;
+&lt;search-bar-snippet 
+    api-url="https://api.example.com"
+    placeholder="Search..."
+    max-results="10"&gt;
+&lt;/search-bar-snippet&gt;
+
+&lt;!-- 3. Full Page Chat (use in dedicated page) --&gt;
+&lt;chat-page-snippet 
+    api-url="https://api.example.com"
+    enable-streaming="true"&gt;
+&lt;/chat-page-snippet&gt;
+
+&lt;!-- Customize with CSS --&gt;
+&lt;style&gt;
+    chat-bubble-snippet {
+        --search-snippet-primary-color: #667eea;
+        --search-snippet-border-radius: 12px;
+    }
+&lt;/style&gt;</code></pre>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Built with TypeScript, Web Components, and ❤️</p>
+        </div>
+    </div>
+
+    <!-- Import the library -->
+    <script type="module" src="/src/main.ts"></script>
+
+    <!-- Theme Toggle Script -->
+    <script>
+        // Theme management
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        const html = document.documentElement;
+
+        // Get saved theme or default to light
+        const savedTheme = localStorage.getItem('theme') || 'light';
+
+        // Apply theme on load
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                html.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            } else {
+                html.removeAttribute('data-theme');
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            }
+        }
+
+        // Initialize theme
+        applyTheme(savedTheme);
+
+        // Toggle theme
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    </script>
+
+    <!-- Configurator Script -->
+    <script>
+        const PROP_CONFIGS = [
+            { name: 'api-url', type: 'text', defaultValue: 'https://docs-website-nlweb.developer-docs-autorag.workers.dev/', description: 'API endpoint URL', appliesTo: ['search-bar', 'chat-bubble', 'chat-page'] },
+            { name: 'api-key', type: 'text', defaultValue: '', description: 'Optional API key', appliesTo: ['search-bar', 'chat-bubble', 'chat-page'] },
+            { name: 'placeholder', type: 'text', defaultValue: 'Type a message...', description: 'Input placeholder text', appliesTo: ['search-bar', 'chat-bubble', 'chat-page'] },
+            { name: 'max-results', type: 'number', defaultValue: 10, description: 'Maximum number of results', appliesTo: ['search-bar'] },
+            { name: 'debounce-ms', type: 'number', defaultValue: 300, description: 'Debounce delay in milliseconds', appliesTo: ['search-bar'] },
+            { name: 'enable-streaming', type: 'boolean', defaultValue: true, description: 'Enable streaming responses', appliesTo: ['search-bar', 'chat-bubble', 'chat-page'] },
+            { name: 'client', type: 'select', options: ['nlweb', 'ai-search'], defaultValue: 'nlweb', description: 'API client type', appliesTo: ['search-bar', 'chat-bubble', 'chat-page'] },
+            { name: 'theme', type: 'select', options: ['light', 'dark', 'auto'], defaultValue: 'auto', description: 'Color theme', appliesTo: ['search-bar', 'chat-bubble', 'chat-page'] }
+        ];
+
+        const CSS_VAR_CONFIGS = [
+            { name: '--search-snippet-primary-color', type: 'color', defaultValue: '#2563eb', description: 'Primary brand color', category: 'Colors' },
+            { name: '--search-snippet-primary-hover', type: 'color', defaultValue: '#0f51dfff', description: 'Primary hover color', category: 'Colors' },
+            { name: '--search-snippet-background', type: 'color', defaultValue: '#ffffff', description: 'Background color', category: 'Colors' },
+            { name: '--search-snippet-surface', type: 'color', defaultValue: '#f8f9fa', description: 'Surface color', category: 'Colors' },
+            { name: '--search-snippet-text-color', type: 'color', defaultValue: '#212529', description: 'Text color', category: 'Colors' },
+            { name: '--search-snippet-text-secondary', type: 'color', defaultValue: '#6c757d', description: 'Secondary text color', category: 'Colors' },
+            { name: '--search-snippet-border-color', type: 'color', defaultValue: '#dee2e6', description: 'Border color', category: 'Colors' },
+            { name: '--search-snippet-hover-background', type: 'color', defaultValue: '#f1f3f5', description: 'Hover background color', category: 'Colors' },
+            { name: '--search-snippet-user-message-bg', type: 'color', defaultValue: '#0066cc', description: 'User message background', category: 'Message Colors' },
+            { name: '--search-snippet-user-message-text', type: 'color', defaultValue: '#ffffff', description: 'User message text', category: 'Message Colors' },
+            { name: '--search-snippet-assistant-message-bg', type: 'color', defaultValue: '#f1f3f5', description: 'Assistant message background', category: 'Message Colors' },
+            { name: '--search-snippet-assistant-message-text', type: 'color', defaultValue: '#212529', description: 'Assistant message text', category: 'Message Colors' },
+            { name: '--search-snippet-font-size-base', type: 'size', defaultValue: '14px', description: 'Base font size', category: 'Typography' },
+            { name: '--search-snippet-font-size-sm', type: 'size', defaultValue: '12px', description: 'Small font size', category: 'Typography' },
+            { name: '--search-snippet-font-size-lg', type: 'size', defaultValue: '16px', description: 'Large font size', category: 'Typography' },
+            { name: '--search-snippet-font-size-xl', type: 'size', defaultValue: '18px', description: 'Extra large font size', category: 'Typography' },
+            { name: '--search-snippet-font-weight-normal', type: 'number', defaultValue: '400', description: 'Normal font weight', category: 'Typography' },
+            { name: '--search-snippet-font-weight-medium', type: 'number', defaultValue: '500', description: 'Medium font weight', category: 'Typography' },
+            { name: '--search-snippet-font-weight-bold', type: 'number', defaultValue: '600', description: 'Bold font weight', category: 'Typography' },
+            { name: '--search-snippet-spacing-xs', type: 'size', defaultValue: '4px', description: 'Extra small spacing', category: 'Spacing' },
+            { name: '--search-snippet-spacing-sm', type: 'size', defaultValue: '8px', description: 'Small spacing', category: 'Spacing' },
+            { name: '--search-snippet-spacing-md', type: 'size', defaultValue: '12px', description: 'Medium spacing', category: 'Spacing' },
+            { name: '--search-snippet-spacing-lg', type: 'size', defaultValue: '16px', description: 'Large spacing', category: 'Spacing' },
+            { name: '--search-snippet-spacing-xl', type: 'size', defaultValue: '24px', description: 'Extra large spacing', category: 'Spacing' },
+            { name: '--search-snippet-input-height', type: 'size', defaultValue: '44px', description: 'Input height', category: 'Sizing' },
+            { name: '--search-snippet-button-height', type: 'size', defaultValue: '36px', description: 'Button height', category: 'Sizing' },
+            { name: '--search-snippet-icon-size', type: 'size', defaultValue: '20px', description: 'Icon size', category: 'Sizing' },
+            { name: '--search-snippet-border-width', type: 'size', defaultValue: '1px', description: 'Border width', category: 'Border' },
+            { name: '--search-snippet-border-radius', type: 'size', defaultValue: '18px', description: 'Border radius', category: 'Border' },
+            { name: '--chat-bubble-button-size', type: 'size', defaultValue: '60px', description: 'Bubble button size', category: 'Chat Bubble' },
+            { name: '--chat-bubble-button-radius', type: 'size', defaultValue: '50%', description: 'Bubble button radius', category: 'Chat Bubble' },
+            { name: '--chat-bubble-button-icon-size', type: 'size', defaultValue: '28px', description: 'Bubble button icon size', category: 'Chat Bubble' },
+            { name: '--chat-bubble-button-icon-color', type: 'color', defaultValue: 'white', description: 'Bubble button icon color', category: 'Chat Bubble' },
+            { name: '--chat-bubble-button-bottom', type: 'size', defaultValue: '20px', description: 'Bubble button bottom position', category: 'Chat Bubble' },
+            { name: '--chat-bubble-button-right', type: 'size', defaultValue: '20px', description: 'Bubble button right position', category: 'Chat Bubble' }
+        ];
+
+        let currentSnippet = 'search-bar';
+        const propValues = new Map();
+        const cssValues = new Map();
+
+        // Initialize defaults
+        PROP_CONFIGS.forEach(p => propValues.set(p.name, p.defaultValue));
+        CSS_VAR_CONFIGS.forEach(c => cssValues.set(c.name, c.defaultValue));
+
+        // Render functions
+        function renderProps() {
+            const container = document.getElementById('propsContainer');
+            const applicable = PROP_CONFIGS.filter(p => p.appliesTo.includes(currentSnippet));
+
+            container.innerHTML = applicable.map(prop => {
+                const value = propValues.get(prop.name);
+                if (prop.type === 'boolean') {
+                    return `<div class="config-item"><label class="config-checkbox"><input type="checkbox" data-prop="${prop.name}" ${value ? 'checked' : ''}><span class="config-label">${prop.name}</span></label><div class="config-description">${prop.description}</div></div>`;
+                } else if (prop.type === 'select') {
+                    return `<div class="config-item"><label class="config-label">${prop.name}</label><select class="config-select" data-prop="${prop.name}">${prop.options.map(o => `<option value="${o}" ${value === o ? 'selected' : ''}>${o}</option>`).join('')}</select><div class="config-description">${prop.description}</div></div>`;
+                }
+                return `<div class="config-item"><label class="config-label">${prop.name}</label><input type="${prop.type}" class="config-input" data-prop="${prop.name}" value="${value}" ${prop.type === 'number' ? 'min="0"' : ''}><div class="config-description">${prop.description}</div></div>`;
+            }).join('');
+
+            // Attach event listeners
+            container.querySelectorAll('[data-prop]').forEach(input => {
+                input.addEventListener('change', e => {
+                    const prop = e.target.dataset.prop;
+                    const val = e.target.type === 'checkbox' ? e.target.checked : e.target.type === 'number' ? Number(e.target.value) : e.target.value;
+                    propValues.set(prop, val);
+                    updatePreview();
+                });
+            });
+        }
+
+        function renderCSSVars() {
+            const container = document.getElementById('cssVarsContainer');
+            const categories = [...new Set(CSS_VAR_CONFIGS.map(v => v.category))];
+
+            container.innerHTML = categories.map(cat => {
+                const vars = CSS_VAR_CONFIGS.filter(v => v.category === cat);
+                return `<div class="config-category"><div class="config-category-label">${cat}</div>${vars.map(cssVar => {
+                    const value = cssValues.get(cssVar.name);
+                    if (cssVar.type === 'color') {
+                        return `<div class="config-item"><label class="config-label">${cssVar.name}</label><input type="color" class="config-input" data-css-var="${cssVar.name}" value="${value}"><div class="config-description">${cssVar.description}</div></div>`;
+                    }
+                    return `<div class="config-item"><label class="config-label">${cssVar.name}</label><input type="text" class="config-input" data-css-var="${cssVar.name}" value="${value}"><div class="config-description">${cssVar.description}</div></div>`;
+                }).join('')}</div>`;
+            }).join('');
+
+            // Attach event listeners
+            container.querySelectorAll('[data-css-var]').forEach(input => {
+                input.addEventListener('input', e => {
+                    const varName = e.target.dataset.cssVar;
+                    cssValues.set(varName, e.target.value);
+                    updatePreview();
+                });
+            });
+        }
+
+        function updatePreview() {
+            const container = document.getElementById('previewContainer');
+            container.innerHTML = '';
+
+            const tag = `${currentSnippet}-snippet`;
+            const el = document.createElement(tag);
+
+            // Apply props
+            PROP_CONFIGS.forEach(p => {
+                if (p.appliesTo.includes(currentSnippet)) {
+                    const v = propValues.get(p.name);
+                    if (v !== undefined && v !== '') el.setAttribute(p.name, String(v));
+                }
+            });
+
+            // Apply CSS
+            const css = [];
+            cssValues.forEach((v, n) => css.push(`${n}: ${v}`));
+            el.style.cssText = css.join('; ');
+
+            container.appendChild(el);
+            updateCode();
+        }
+
+        function updateCode() {
+            const tag = `${currentSnippet}-snippet`;
+            const props = [];
+            PROP_CONFIGS.forEach(p => {
+                if (p.appliesTo.includes(currentSnippet)) {
+                    const v = propValues.get(p.name);
+                    if (v !== undefined && v !== '' && v !== p.defaultValue) props.push(`  ${p.name}="${v}"`);
+                }
+            });
+
+            const css = [];
+            cssValues.forEach((v, n) => {
+                const c = CSS_VAR_CONFIGS.find(x => x.name === n);
+                if (c && v !== c.defaultValue) css.push(`  ${n}: ${v};`);
+            });
+
+            const code = `<!-- HTML -->\n<${tag}${props.length ? '\n' + props.join('\n') : ''}>\n</${tag}>\n\n<!-- CSS -->\n<style>\n${tag} {\n${css.join('\n')}\n}\n</style>`;
+            document.getElementById('generatedCode').textContent = code;
+        }
+
+        function resetConfig() {
+            PROP_CONFIGS.forEach(p => propValues.set(p.name, p.defaultValue));
+            CSS_VAR_CONFIGS.forEach(c => cssValues.set(c.name, c.defaultValue));
+            renderProps();
+            renderCSSVars();
+            updatePreview();
+        }
+
+        async function copyCode() {
+            const code = document.getElementById('generatedCode').textContent;
+            try {
+                await navigator.clipboard.writeText(code);
+                const btn = document.getElementById('copyBtn');
+                const orig = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = orig, 2000);
+            } catch (e) {
+                console.error('Copy failed:', e);
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Tab switching
+            document.querySelectorAll('.config-tab').forEach(tab => {
+                tab.addEventListener('click', e => {
+                    document.querySelectorAll('.config-tab').forEach(t => t.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentSnippet = e.target.dataset.snippet;
+                    renderProps();
+                    updatePreview();
+                });
+            });
+
+            // Action buttons
+            document.getElementById('resetBtn').addEventListener('click', resetConfig);
+            document.getElementById('copyBtn').addEventListener('click', copyCode);
+
+            // Initial render
+            renderProps();
+            renderCSSVars();
+            updatePreview();
+        });
+    </script>
+
+</body>
+
+</html>

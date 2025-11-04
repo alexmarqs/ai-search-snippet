@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "cloudflare-search-chat-snippet",
+  "compatibility_date": "2025-11-19",
+  "main": "./worker.js",
+  "assets": {
+    "not_found_handling": "single-page-application",
+  }
+}
