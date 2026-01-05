@@ -32,11 +32,8 @@ export class SearchBarSnippet extends HTMLElement {
   static get observedAttributes(): string[] {
     return [
       'api-url',
-      'api-key',
       'placeholder',
       'max-results',
-      'debounce-ms',
-      'enable-streaming',
       'theme',
     ];
   }

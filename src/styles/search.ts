@@ -59,14 +59,14 @@ export const searchStyles = `
   color: var(--search-snippet-text-secondary);
 }
 
-.search-view:has(.search-input:not(:placeholder-shown)) .search-input-wrapper {
+.search-view:has(.search-input:not(:placeholder-shown)) .search-input-wrapper, .search-view:has(.search-input:not(:placeholder-shown)) {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
 .search-view:focus-within {
   border-color: var(--search-snippet-primary-color);
-  box-shadow: 0 0 0 3px var(--search-snippet-focus-ring);
+  box-shadow: inset 0 0 0 3px var(--search-snippet-focus-ring);
 }
 
 .search-view:has(.search-input:not(:placeholder-shown)) .search-content {

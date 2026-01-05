@@ -35,8 +35,7 @@ yarn add nlweb-cl-snippet
 <!-- Use in chat mode -->
 <search-snippet 
     api-url="https://api.example.com"
-    mode="chat"
-    enable-streaming="true">
+    mode="chat">
 </search-snippet>
 
 <!-- Use in search mode -->
