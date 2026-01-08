@@ -213,11 +213,10 @@ export class SearchBarSnippet extends HTMLElement {
       this.showNoResultsState(query);
       return;
     }
-
     const props = this.getProps();
     const brandingHTML = props.hideBranding
       ? ''
-      : `<div class="powered-by">
+      : `<div class="powered-by-inline">
             Powered by <a href="https://ai.cloudflare.com" target="_blank" rel="noopener noreferrer">Cloudflare AI Search</a>
          </div>`;
 
@@ -226,11 +225,11 @@ export class SearchBarSnippet extends HTMLElement {
                 <div class="search-count">
                     Found ${results.length} result${results.length === 1 ? '' : 's'}
                 </div>
+                ${brandingHTML}
             </div>
             <div class="search-results">
                 ${results.map((result) => this.renderResult(result)).join('')}
             </div>
-            ${brandingHTML}
         `;
 
     this.resultsContainer.innerHTML = resultsHTML;
