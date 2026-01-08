@@ -697,20 +697,26 @@
             display: flex;
             border-bottom: 1px solid var(--color-border-100);
             background: var(--color-background-200);
-            padding: 8px;
+            padding: 8px 8px 0;
             gap: 4px;
         }
 
         .config-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             padding: 10px 20px;
-            border: none;
             background: transparent;
             cursor: pointer;
             font-size: 14px;
             font-weight: 500;
             color: var(--color-foreground-200);
-            border-radius: 8px;
+            border-radius: 8px 8px 0 0;
             transition: all 0.2s ease;
+            border-width: 1px 1px 0 1px;
+            border-style: solid;
+            border-color: transparent;
+            margin-bottom: -1px;
         }
 
         .config-tab:hover {
@@ -718,8 +724,10 @@
         }
 
         .config-tab.active {
-            background: var(--color-accent-100);
-            color: white;
+            background: var(--color-background-200);
+            color: var(--color-foreground-100);
+            border-color: var(--color-border-100);
+            border-bottom-color: var(--color-background-100);
         }
 
         .config-body {
