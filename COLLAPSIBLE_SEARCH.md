@@ -23,12 +23,11 @@ The search component now features a **collapsible interface** that starts as a c
 The search component automatically starts in collapsed mode. Simply click the search icon to expand it:
 
 ```html
-<search-snippet 
+<search-bar-snippet 
     api-url="http://localhost:3000"
-    mode="search"
     placeholder="Search for information..."
     max-results="5">
-</search-snippet>
+</search-bar-snippet>
 ```
 
 ## User Interaction Flow
@@ -42,7 +41,7 @@ The search component automatically starts in collapsed mode. Simply click the se
 
 ## Technical Implementation
 
-### Component Changes (`search-view.ts`)
+### Component Changes (`search-bar-snippet.ts`)
 
 - Added `isExpanded` state (boolean)
 - Added `toggleButton` for the search icon
@@ -99,7 +98,7 @@ You can customize the appearance using CSS variables:
 
 ### Icon Button
 ```css
-search-snippet[mode="search"] {
+search-bar-snippet {
   /* Button colors */
   --search-snippet-primary-color: #F6821F;
   --search-snippet-primary-hover: #FBAD41;
@@ -111,7 +110,7 @@ search-snippet[mode="search"] {
 
 ### Animation Speed
 ```css
-search-snippet[mode="search"] {
+search-bar-snippet {
   --search-snippet-transition-slow: 400ms ease;
   --search-snippet-transition: 250ms ease;
 }
@@ -190,25 +189,25 @@ Potential improvements:
 ### Basic Usage
 ```html
 <!-- Starts collapsed by default -->
-<search-snippet api-url="..." mode="search"></search-snippet>
+<search-bar-snippet api-url="..."></search-bar-snippet>
 ```
 
 ### With Custom Theme
 ```html
 <style>
-  search-snippet[mode="search"] {
+  search-bar-snippet {
     --search-snippet-primary-color: #F6821F;
     --search-snippet-shadow: 0 4px 12px rgba(246, 130, 31, 0.3);
   }
 </style>
-<search-snippet api-url="..." mode="search"></search-snippet>
+<search-bar-snippet api-url="..."></search-bar-snippet>
 ```
 
 ### In a Header/Navbar
 ```html
 <header style="display: flex; justify-content: space-between; padding: 1rem;">
   <div class="logo">My App</div>
-  <search-snippet api-url="..." mode="search"></search-snippet>
+  <search-bar-snippet api-url="..."></search-bar-snippet>
 </header>
 ```
 

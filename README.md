@@ -202,34 +202,107 @@ search-bar-snippet,
 search-modal-snippet,
 chat-bubble-snippet,
 chat-page-snippet {
-    /* Colors */
-    --search-snippet-primary-color: #0066cc;
-    --search-snippet-primary-hover: #0052a3;
+    /* ========== COLORS ========== */
+    /* Primary */
+    --search-snippet-primary-color: #2563eb;
+    --search-snippet-primary-hover: #0f51dfff;
+    
+    /* Background & Surface */
     --search-snippet-background: #ffffff;
+    --search-snippet-surface: #f8f9fa;
+    --search-snippet-hover-background: #f1f3f5;
+    
+    /* Text */
     --search-snippet-text-color: #212529;
+    --search-snippet-text-secondary: #6c757d;
+    
+    /* Border & Focus */
     --search-snippet-border-color: #dee2e6;
+    --search-snippet-focus-ring: #0066cc40;
     
-    /* Typography */
-    --search-snippet-font-family: -apple-system, sans-serif;
+    /* Status Colors */
+    --search-snippet-error-color: #dc3545;
+    --search-snippet-error-background: #f8d7da;
+    --search-snippet-success-color: #28a745;
+    --search-snippet-success-background: #d4edda;
+    --search-snippet-warning-color: #ffc107;
+    --search-snippet-warning-background: #fff3cd;
+    
+    /* Message Colors */
+    --search-snippet-user-message-bg: #0066cc;
+    --search-snippet-user-message-text: #ffffff;
+    --search-snippet-assistant-message-bg: #f1f3f5;
+    --search-snippet-assistant-message-text: #212529;
+    --search-snippet-system-message-bg: #fff3cd;
+    --search-snippet-system-message-text: #856404;
+    
+    /* ========== TYPOGRAPHY ========== */
+    --search-snippet-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 
+                                  'Helvetica Neue', Arial, sans-serif;
+    --search-snippet-font-family-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', 
+                                       Menlo, Courier, monospace;
     --search-snippet-font-size-base: 14px;
+    --search-snippet-font-size-sm: 12px;
+    --search-snippet-font-size-lg: 16px;
+    --search-snippet-font-size-xl: 18px;
     --search-snippet-line-height: 1.5;
+    --search-snippet-font-weight-normal: 400;
+    --search-snippet-font-weight-medium: 500;
+    --search-snippet-font-weight-bold: 600;
     
-    /* Spacing */
+    /* ========== SPACING ========== */
+    --search-snippet-spacing-xs: 4px;
+    --search-snippet-spacing-sm: 8px;
     --search-snippet-spacing-md: 12px;
     --search-snippet-spacing-lg: 16px;
+    --search-snippet-spacing-xl: 24px;
+    --search-snippet-spacing-xxl: 32px;
     
-    /* Sizing */
+    /* ========== SIZING ========== */
+    --search-snippet-width: 100%;
+    --search-snippet-max-width: 100%;
+    --search-snippet-min-width: 320px;
     --search-snippet-max-height: 600px;
     --search-snippet-input-height: 44px;
+    --search-snippet-button-height: 36px;
+    --search-snippet-icon-size: 20px;
+    --search-snippet-icon-margin-left: 6px;
     
-    /* Border */
-    --search-snippet-border-radius: 8px;
+    /* ========== BORDER ========== */
+    --search-snippet-border-width: 1px;
+    --search-snippet-border-radius: 18px;
     
-    /* Shadows */
+    /* ========== SHADOWS ========== */
+    --search-snippet-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --search-snippet-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --search-snippet-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --search-snippet-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+    --search-snippet-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+    --search-snippet-result-item-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     
-    /* Animation */
+    /* ========== ANIMATION ========== */
+    --search-snippet-transition-fast: 150ms ease;
     --search-snippet-transition: 200ms ease;
+    --search-snippet-transition-slow: 300ms ease;
+    --search-snippet-animation-duration: 0.2s;
+    
+    /* ========== Z-INDEX ========== */
+    --search-snippet-z-dropdown: 1000;
+    --search-snippet-z-modal: 1050;
+    --search-snippet-z-popover: 1060;
+    --search-snippet-z-tooltip: 1070;
+    
+    /* ========== CHAT BUBBLE SPECIFIC ========== */
+    --chat-bubble-button-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    --chat-bubble-window-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    --chat-bubble-button-size: 60px;
+    --chat-bubble-button-radius: 50%;
+    --chat-bubble-button-icon-size: 28px;
+    --chat-bubble-button-icon-color: white;
+    --chat-bubble-button-bottom: 20px;
+    --chat-bubble-button-right: 20px;
+    --chat-bubble-button-z-index: 9999;
+    --chat-bubble-position: fixed;
 }
 ```
 

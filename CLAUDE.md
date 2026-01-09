@@ -47,7 +47,8 @@ src/
 ├── styles/
 │   ├── theme.ts              # Base CSS variables and common styles
 │   ├── chat.ts               # Chat-specific styles
-│   └── search.ts             # Search-specific styles
+│   ├── search.ts             # Search-specific styles
+│   └── modal.ts              # Modal-specific styles
 ├── types/
 │   └── index.ts              # TypeScript interfaces and types
 ├── utils/

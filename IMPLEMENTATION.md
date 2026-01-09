@@ -11,12 +11,17 @@
 
 ### Component Features
 
-#### Main Component (`<search-snippet>`)
-- ✅ Dual mode support (search/chat)
+#### Web Components (4 exported)
+- ✅ `<search-bar-snippet>` - Search input with results dropdown
+- ✅ `<search-modal-snippet>` - Modal search with Cmd/Ctrl+K shortcut
+- ✅ `<chat-bubble-snippet>` - Floating chat bubble overlay
+- ✅ `<chat-page-snippet>` - Full-page chat with session history
+
+#### Common Features
 - ✅ Attribute-based configuration
 - ✅ Shadow DOM for style encapsulation
-- ✅ Public API methods (sendMessage, search, getMessages, clearChat, setMode)
-- ✅ Custom events (ready, search, message, error, modeChange)
+- ✅ Public API methods (sendMessage, search, getMessages, clearChat)
+- ✅ Custom events (ready, search, message, error)
 - ✅ Lifecycle management (connected/disconnected callbacks)
 
 #### Search Mode
@@ -37,7 +42,7 @@
 - ✅ Loading state for streaming
 
 ### API Integration
-- ✅ **NLWebClient**: Full-featured API client
+- ✅ **AISearchClient**: Full-featured API client
 - ✅ Streaming support via ReadableStream
 - ✅ Request retry logic (3 attempts with exponential backoff)
 - ✅ Request cancellation support
@@ -127,32 +132,38 @@
 nlweb-cl-snippet/
 ├── src/
 │   ├── api/
-│   │   ├── nlweb-client.ts          ✅ Enhanced API client with streaming
-│   │   └── ask-api.ts                ✅ Legacy API wrapper
+│   │   ├── index.ts                   ✅ Base Client abstract class
+│   │   └── ai-search.ts               ✅ AISearchClient with streaming
 │   ├── components/
-│   │   ├── search-snippet.ts         ✅ Main web component
-│   │   ├── search-view.ts            ✅ Search interface implementation
-│   │   └── chat-view.ts              ✅ Chat interface with streaming
+│   │   ├── search-bar-snippet.ts      ✅ Search input with results
+│   │   ├── search-modal-snippet.ts    ✅ Modal search with Cmd/Ctrl+K
+│   │   ├── chat-bubble-snippet.ts     ✅ Floating chat bubble
+│   │   ├── chat-page-snippet.ts       ✅ Full-page chat with history
+│   │   └── chat-view.ts               ✅ Shared chat interface
 │   ├── styles/
-│   │   ├── theme.ts                  ✅ Base styles & CSS variables
-│   │   ├── search.ts                 ✅ Search-specific styles
-│   │   └── chat.ts                   ✅ Chat-specific styles
+│   │   ├── theme.ts                   ✅ Base styles & CSS variables
+│   │   ├── search.ts                  ✅ Search-specific styles
+│   │   ├── chat.ts                    ✅ Chat-specific styles
+│   │   └── modal.ts                   ✅ Modal-specific styles
 │   ├── types/
-│   │   └── index.ts                  ✅ TypeScript type definitions
+│   │   └── index.ts                   ✅ TypeScript type definitions
 │   ├── utils/
-│   │   └── index.ts                  ✅ Utility functions
-│   └── main.ts                       ✅ Entry point & exports
-├── dist/                              ✅ Build output
-│   ├── search-snippet.es.js          ✅ ESM bundle
-│   ├── search-snippet.umd.js         ✅ UMD bundle
-│   ├── *.js.map                      ✅ Source maps
-│   └── main.d.ts                     ✅ Type definitions
-├── index.html                         ✅ Beautiful demo page
-├── package.json                       ✅ NPM package config
-├── tsconfig.json                      ✅ TypeScript config
-├── vite.config.ts                     ✅ Build configuration
-├── README.md                          ✅ Comprehensive documentation
-└── IMPLEMENTATION.md                  ✅ This file
+│   │   ├── index.ts                   ✅ Utility functions
+│   │   └── markdown.ts                ✅ Markdown-to-HTML converter
+│   └── main.ts                        ✅ Entry point & exports
+├── dist/                               ✅ Build output
+│   ├── search-snippet.es.js           ✅ ESM bundle
+│   ├── search-snippet.umd.js          ✅ UMD bundle
+│   ├── *.js.map                       ✅ Source maps
+│   └── main.d.ts                      ✅ Type definitions
+├── index.html                          ✅ Beautiful demo page
+├── package.json                        ✅ NPM package config
+├── tsconfig.json                       ✅ TypeScript config
+├── vite.config.ts                      ✅ Demo app build configuration
+├── vite.build.config.ts                ✅ Library build configuration
+├── wrangler.jsonc                      ✅ Cloudflare Workers configuration
+├── README.md                           ✅ Comprehensive documentation
+└── IMPLEMENTATION.md                   ✅ This file
 ```
 
 ## 🚀 Usage Examples
@@ -160,7 +171,18 @@ nlweb-cl-snippet/
 ### Basic HTML
 ```html
 <script type="module" src="/dist/search-snippet.es.js"></script>
-<search-snippet api-url="http://localhost:3000" mode="chat"></search-snippet>
+
+<!-- Search bar with results -->
+<search-bar-snippet api-url="http://localhost:3000"></search-bar-snippet>
+
+<!-- Modal search with Cmd/Ctrl+K -->
+<search-modal-snippet api-url="http://localhost:3000"></search-modal-snippet>
+
+<!-- Floating chat bubble -->
+<chat-bubble-snippet api-url="http://localhost:3000"></chat-bubble-snippet>
+
+<!-- Full-page chat with history -->
+<chat-page-snippet api-url="http://localhost:3000"></chat-page-snippet>
 ```
 
 ### React
@@ -168,14 +190,14 @@ nlweb-cl-snippet/
 import 'nlweb-cl-snippet';
 
 function App() {
-  return <search-snippet api-url="..." mode="chat" />;
+  return <chat-bubble-snippet api-url="..." />;
 }
 ```
 
 ### Vue
 ```vue
 <template>
-  <search-snippet api-url="..." mode="chat" />
+  <chat-bubble-snippet api-url="..." />
 </template>
 
 <script setup>
@@ -185,7 +207,8 @@ import 'nlweb-cl-snippet';
 
 ### Custom Styling
 ```css
-search-snippet {
+search-bar-snippet,
+chat-bubble-snippet {
   --search-snippet-primary-color: #667eea;
   --search-snippet-border-radius: 12px;
   --search-snippet-max-height: 700px;

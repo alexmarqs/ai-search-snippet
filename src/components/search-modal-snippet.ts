@@ -130,7 +130,7 @@ export class SearchModalSnippet extends HTMLElement {
     const brandingHTML = props.hideBranding
       ? ''
       : `<div class="powered-by-inline">
-          Powered by <a href="https://ai.cloudflare.com" target="_blank" rel="noopener noreferrer">Cloudflare AI Search</a>
+          Powered by <a href="https://search.ai.cloudflare.com" target="_blank" rel="noopener noreferrer">Cloudflare AI Search</a>
         </div>`;
 
     const container = document.createElement('div');

@@ -249,7 +249,7 @@ export class ChatBubbleSnippet extends HTMLElement {
     const brandingHTML = props.hideBranding
       ? ''
       : `<div class="powered-by">
-          Powered by <a href="https://ai.cloudflare.com" target="_blank" rel="noopener noreferrer">Cloudflare AI Search</a>
+          Powered by <a href="https://search.ai.cloudflare.com" target="_blank" rel="noopener noreferrer">Cloudflare AI Search</a>
         </div>`;
 
     return `

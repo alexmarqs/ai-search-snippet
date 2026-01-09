@@ -1320,6 +1320,126 @@
         .quickstart-panel.active {
             display: block;
         }
+
+        /* CSS Variables Reference Table */
+        .css-vars-section {
+            padding: 24px;
+        }
+
+        .css-vars-category {
+            margin-bottom: 32px;
+        }
+
+        .css-vars-category h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-foreground-100);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--color-border-100);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .css-vars-category h4::before {
+            content: '';
+            width: 4px;
+            height: 16px;
+            background: var(--color-accent-100);
+            border-radius: 2px;
+        }
+
+        .css-vars-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .css-vars-table th,
+        .css-vars-table td {
+            text-align: left;
+            padding: 10px 12px;
+            border: 1px solid var(--color-border-100);
+        }
+
+        .css-vars-table th {
+            background: var(--color-background-200);
+            font-weight: 600;
+            color: var(--color-foreground-100);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .css-vars-table td {
+            background: var(--color-background-100);
+            color: var(--color-foreground-200);
+        }
+
+        .css-vars-table tr:hover td {
+            background: var(--color-background-200);
+        }
+
+        .css-vars-table code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            background: var(--color-background-300);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--color-accent-100);
+        }
+
+        .css-vars-table .var-default {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--color-foreground-200);
+        }
+
+        .css-vars-filter {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .css-vars-filter-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--color-border-100);
+            background: var(--color-background-100);
+            color: var(--color-foreground-200);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .css-vars-filter-btn:hover {
+            border-color: var(--color-accent-100);
+            color: var(--color-foreground-100);
+        }
+
+        .css-vars-filter-btn.active {
+            background: var(--color-accent-100);
+            border-color: var(--color-accent-100);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .css-vars-table {
+                font-size: 11px;
+            }
+
+            .css-vars-table th,
+            .css-vars-table td {
+                padding: 8px;
+            }
+
+            .css-vars-table code {
+                font-size: 10px;
+            }
+        }
     </style>
 </head>
 
@@ -1356,6 +1476,7 @@
                 <a href="#demos" class="nav-link">Components</a>
                 <a href="#features" class="nav-link">Features</a>
                 <a href="#configurator" class="nav-link">Configurator</a>
+                <a href="#css-variables" class="nav-link">CSS Variables</a>
                 <a href="#quick-start" class="nav-link">Docs</a>
             </div>
             <div class="nav-cta">
@@ -1956,6 +2077,550 @@ export default defineConfig({
         </section>
     </div>
 
+    <!-- CSS Variables Reference -->
+    <div class="container">
+        <section class="section" id="css-variables">
+            <div class="section-header">
+                <h2>CSS Variables Reference</h2>
+                <p>Customize every aspect of the components using CSS custom properties. All variables use the <code>--search-snippet-</code> prefix.</p>
+            </div>
+            <div class="css-vars-section" style="border: 1px solid var(--color-border-100); background: var(--color-background-100);">
+                
+                <!-- Colors -->
+                <div class="css-vars-category" id="vars-colors">
+                    <h4>Colors</h4>
+                    <table class="css-vars-table">
+                        <thead>
+                            <tr>
+                                <th>Variable</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--search-snippet-primary-color</code></td>
+                                <td class="var-default">#2563eb</td>
+                                <td>Primary brand color</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-primary-hover</code></td>
+                                <td class="var-default">#0f51df</td>
+                                <td>Primary hover state</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-background</code></td>
+                                <td class="var-default">#ffffff</td>
+                                <td>Main background color</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-surface</code></td>
+                                <td class="var-default">#f8f9fa</td>
+                                <td>Surface/card background</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-hover-background</code></td>
+                                <td class="var-default">#f1f3f5</td>
+                                <td>Hover state background</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-text-color</code></td>
+                                <td class="var-default">#212529</td>
+                                <td>Primary text color</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-text-secondary</code></td>
+                                <td class="var-default">#6c757d</td>
+                                <td>Secondary/muted text</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-border-color</code></td>
+                                <td class="var-default">#dee2e6</td>
+                                <td>Border color</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-focus-ring</code></td>
+                                <td class="var-default">#0066cc40</td>
+                                <td>Focus ring color (with alpha)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Status Colors -->
+                <div class="css-vars-category" id="vars-status">
+                    <h4>Status Colors</h4>
+                    <table class="css-vars-table">
+                        <thead>
+                            <tr>
+                                <th>Variable</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--search-snippet-error-color</code></td>
+                                <td class="var-default">#dc3545</td>
+                                <td>Error text color</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-error-background</code></td>
+                                <td class="var-default">#f8d7da</td>
+                                <td>Error background</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-success-color</code></td>
+                                <td class="var-default">#28a745</td>
+                                <td>Success text color</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-success-background</code></td>
+                                <td class="var-default">#d4edda</td>
+                                <td>Success background</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-warning-color</code></td>
+                                <td class="var-default">#ffc107</td>
+                                <td>Warning text color</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-warning-background</code></td>
+                                <td class="var-default">#fff3cd</td>
+                                <td>Warning background</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Message Colors -->
+                <div class="css-vars-category" id="vars-messages">
+                    <h4>Message Colors (Chat)</h4>
+                    <table class="css-vars-table">
+                        <thead>
+                            <tr>
+                                <th>Variable</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--search-snippet-user-message-bg</code></td>
+                                <td class="var-default">#0066cc</td>
+                                <td>User message bubble background</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-user-message-text</code></td>
+                                <td class="var-default">#ffffff</td>
+                                <td>User message text color</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-assistant-message-bg</code></td>
+                                <td class="var-default">#f1f3f5</td>
+                                <td>Assistant message bubble</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-assistant-message-text</code></td>
+                                <td class="var-default">#212529</td>
+                                <td>Assistant message text</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-system-message-bg</code></td>
+                                <td class="var-default">#fff3cd</td>
+                                <td>System message bubble</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-system-message-text</code></td>
+                                <td class="var-default">#856404</td>
+                                <td>System message text</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Typography -->
+                <div class="css-vars-category" id="vars-typography">
+                    <h4>Typography</h4>
+                    <table class="css-vars-table">
+                        <thead>
+                            <tr>
+                                <th>Variable</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--search-snippet-font-family</code></td>
+                                <td class="var-default">-apple-system, BlinkMacSystemFont, ...</td>
+                                <td>Primary font stack</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-font-family-mono</code></td>
+                                <td class="var-default">'SFMono-Regular', Consolas, ...</td>
+                                <td>Monospace font stack</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-font-size-base</code></td>
+                                <td class="var-default">14px</td>
+                                <td>Base font size</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-font-size-sm</code></td>
+                                <td class="var-default">12px</td>
+                                <td>Small font size</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-font-size-lg</code></td>
+                                <td class="var-default">16px</td>
+                                <td>Large font size</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-font-size-xl</code></td>
+                                <td class="var-default">18px</td>
+                                <td>Extra large font size</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-line-height</code></td>
+                                <td class="var-default">1.5</td>
+                                <td>Line height</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-font-weight-normal</code></td>
+                                <td class="var-default">400</td>
+                                <td>Normal font weight</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-font-weight-medium</code></td>
+                                <td class="var-default">500</td>
+                                <td>Medium font weight</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-font-weight-bold</code></td>
+                                <td class="var-default">600</td>
+                                <td>Bold font weight</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Spacing -->
+                <div class="css-vars-category" id="vars-spacing">
+                    <h4>Spacing</h4>
+                    <table class="css-vars-table">
+                        <thead>
+                            <tr>
+                                <th>Variable</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--search-snippet-spacing-xs</code></td>
+                                <td class="var-default">4px</td>
+                                <td>Extra small spacing</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-spacing-sm</code></td>
+                                <td class="var-default">8px</td>
+                                <td>Small spacing</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-spacing-md</code></td>
+                                <td class="var-default">12px</td>
+                                <td>Medium spacing</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-spacing-lg</code></td>
+                                <td class="var-default">16px</td>
+                                <td>Large spacing</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-spacing-xl</code></td>
+                                <td class="var-default">24px</td>
+                                <td>Extra large spacing</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-spacing-xxl</code></td>
+                                <td class="var-default">32px</td>
+                                <td>Double extra large spacing</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Sizing -->
+                <div class="css-vars-category" id="vars-sizing">
+                    <h4>Sizing</h4>
+                    <table class="css-vars-table">
+                        <thead>
+                            <tr>
+                                <th>Variable</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--search-snippet-width</code></td>
+                                <td class="var-default">100%</td>
+                                <td>Component width</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-max-width</code></td>
+                                <td class="var-default">100%</td>
+                                <td>Maximum width</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-min-width</code></td>
+                                <td class="var-default">320px</td>
+                                <td>Minimum width</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-max-height</code></td>
+                                <td class="var-default">600px</td>
+                                <td>Maximum height</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-input-height</code></td>
+                                <td class="var-default">44px</td>
+                                <td>Input field height</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-button-height</code></td>
+                                <td class="var-default">36px</td>
+                                <td>Button height</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-icon-size</code></td>
+                                <td class="var-default">20px</td>
+                                <td>Icon size</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-icon-margin-left</code></td>
+                                <td class="var-default">6px</td>
+                                <td>Icon left margin</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Border -->
+                <div class="css-vars-category" id="vars-border">
+                    <h4>Border</h4>
+                    <table class="css-vars-table">
+                        <thead>
+                            <tr>
+                                <th>Variable</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--search-snippet-border-width</code></td>
+                                <td class="var-default">1px</td>
+                                <td>Border width</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-border-radius</code></td>
+                                <td class="var-default">18px</td>
+                                <td>Border radius</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Shadows -->
+                <div class="css-vars-category" id="vars-shadows">
+                    <h4>Shadows</h4>
+                    <table class="css-vars-table">
+                        <thead>
+                            <tr>
+                                <th>Variable</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--search-snippet-shadow-sm</code></td>
+                                <td class="var-default">0 1px 2px 0 rgba(0, 0, 0, 0.05)</td>
+                                <td>Small shadow</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-shadow</code></td>
+                                <td class="var-default">0 2px 8px rgba(0, 0, 0, 0.1)</td>
+                                <td>Default shadow</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-shadow-md</code></td>
+                                <td class="var-default">0 4px 12px rgba(0, 0, 0, 0.15)</td>
+                                <td>Medium shadow</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-shadow-lg</code></td>
+                                <td class="var-default">0 8px 24px rgba(0, 0, 0, 0.2)</td>
+                                <td>Large shadow</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-shadow-inner</code></td>
+                                <td class="var-default">inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)</td>
+                                <td>Inner shadow</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-result-item-shadow</code></td>
+                                <td class="var-default">0 1px 2px 0 rgba(0, 0, 0, 0.05)</td>
+                                <td>Result item shadow</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Animation -->
+                <div class="css-vars-category" id="vars-animation">
+                    <h4>Animation</h4>
+                    <table class="css-vars-table">
+                        <thead>
+                            <tr>
+                                <th>Variable</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--search-snippet-transition-fast</code></td>
+                                <td class="var-default">150ms ease</td>
+                                <td>Fast transition</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-transition</code></td>
+                                <td class="var-default">200ms ease</td>
+                                <td>Default transition</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-transition-slow</code></td>
+                                <td class="var-default">300ms ease</td>
+                                <td>Slow transition</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-animation-duration</code></td>
+                                <td class="var-default">0.2s</td>
+                                <td>Animation duration</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Z-Index -->
+                <div class="css-vars-category" id="vars-zindex">
+                    <h4>Z-Index</h4>
+                    <table class="css-vars-table">
+                        <thead>
+                            <tr>
+                                <th>Variable</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--search-snippet-z-dropdown</code></td>
+                                <td class="var-default">1000</td>
+                                <td>Dropdown z-index</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-z-modal</code></td>
+                                <td class="var-default">1050</td>
+                                <td>Modal z-index</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-z-popover</code></td>
+                                <td class="var-default">1060</td>
+                                <td>Popover z-index</td>
+                            </tr>
+                            <tr>
+                                <td><code>--search-snippet-z-tooltip</code></td>
+                                <td class="var-default">1070</td>
+                                <td>Tooltip z-index</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Chat Bubble Specific -->
+                <div class="css-vars-category" id="vars-chat-bubble">
+                    <h4>Chat Bubble Specific</h4>
+                    <table class="css-vars-table">
+                        <thead>
+                            <tr>
+                                <th>Variable</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--chat-bubble-button-size</code></td>
+                                <td class="var-default">60px</td>
+                                <td>Bubble button size</td>
+                            </tr>
+                            <tr>
+                                <td><code>--chat-bubble-button-radius</code></td>
+                                <td class="var-default">50%</td>
+                                <td>Bubble button radius</td>
+                            </tr>
+                            <tr>
+                                <td><code>--chat-bubble-button-icon-size</code></td>
+                                <td class="var-default">28px</td>
+                                <td>Bubble icon size</td>
+                            </tr>
+                            <tr>
+                                <td><code>--chat-bubble-button-icon-color</code></td>
+                                <td class="var-default">white</td>
+                                <td>Bubble icon color</td>
+                            </tr>
+                            <tr>
+                                <td><code>--chat-bubble-button-bottom</code></td>
+                                <td class="var-default">20px</td>
+                                <td>Button bottom position</td>
+                            </tr>
+                            <tr>
+                                <td><code>--chat-bubble-button-right</code></td>
+                                <td class="var-default">20px</td>
+                                <td>Button right position</td>
+                            </tr>
+                            <tr>
+                                <td><code>--chat-bubble-button-shadow</code></td>
+                                <td class="var-default">0 8px 24px rgba(0, 0, 0, 0.2)</td>
+                                <td>Button shadow</td>
+                            </tr>
+                            <tr>
+                                <td><code>--chat-bubble-window-shadow</code></td>
+                                <td class="var-default">0 8px 24px rgba(0, 0, 0, 0.2)</td>
+                                <td>Chat window shadow</td>
+                            </tr>
+                            <tr>
+                                <td><code>--chat-bubble-button-z-index</code></td>
+                                <td class="var-default">9999</td>
+                                <td>Button z-index</td>
+                            </tr>
+                            <tr>
+                                <td><code>--chat-bubble-position</code></td>
+                                <td class="var-default">fixed</td>
+                                <td>Bubble position type</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-cta">
@@ -1983,6 +2648,7 @@ export default defineConfig({
             <a href="#demos" class="footer-link">Components</a>
             <a href="#features" class="footer-link">Features</a>
             <a href="#configurator" class="footer-link">Configurator</a>
+            <a href="#css-variables" class="footer-link">CSS Variables</a>
             <a href="#quick-start" class="footer-link">Documentation</a>
         </div>
         <p class="footer-copyright">Built with TypeScript and Web Components at Cloudflare</p>
