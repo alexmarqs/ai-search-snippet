@@ -6,6 +6,7 @@
 import type {
   ChatTextResponse,
   ChatTypes,
+  SearchAPIResponse,
   SearchError,
   SearchOptions,
   SearchResult,
@@ -20,17 +21,10 @@ export class AISearchClient extends Client {
   ): Promise<Response> {
     return fetch(`${this.baseUrl}/${operation}`, {
       method: 'POST',
-      body: JSON.stringify(
-        operation === 'ai-search' || operation === 'search'
-          ? {
-              query: options.query,
-              stream: options.streaming,
-            }
-          : {
-              // model: 'workers-ai/@cf/meta/llama-3.3-70b-instruct-fp8-fast',
-              messages: [{ role: 'user', content: options.query }],
-            }
-      ),
+      body: JSON.stringify({
+        messages: [{ role: 'user', content: options.query }],
+        stream: options.streaming,
+      }),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -65,42 +59,19 @@ export class AISearchClient extends Client {
       if (!response.body) {
         throw new Error('Response body is empty');
       }
-      const result: {
-        success: boolean;
-        result: {
-          data: {
-            file_id: string;
-            filename: string;
-            score: number;
-            attributes: {
-              timestamp: number;
-              folder: string;
-              filename: string;
-              file: {
-                description: string;
-                image: string;
-                title: string;
-              };
-            };
-            content: [
-              {
-                id: string;
-                type: string;
-                text: string;
-              },
-            ];
-          }[];
-        };
-      } = await response.json();
+      const result: SearchAPIResponse = await response.json();
       if (result.success && result.result) {
-        return result.result.data.map((item) => ({
-          type: 'result',
-          id: item.file_id,
-          title: item.attributes.file.title,
-          description: item.attributes.file.description,
-          url: item.filename,
-          metadata: item.attributes,
-        }));
+        return result.result.chunks.map(
+          (item) =>
+            ({
+              type: 'result',
+              id: item.id,
+              title: item.item.metadata.title,
+              description: item.item.metadata.description,
+              url: item.item.key,
+              metadata: item.item.metadata as unknown as Record<string, unknown>,
+            }) satisfies SearchResult
+        );
       }
       if (result.success === false) {
         // @ts-expect-error need to check this
