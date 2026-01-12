@@ -375,6 +375,8 @@ export class SearchModalSnippet extends HTMLElement {
   }
 
   private renderResult(result: SearchResult, index: number): string {
+    const imageHTML = this.renderResultImage(result.image, result.title);
+
     return `
       <div 
         class="modal-result-item${index === this.activeIndex ? ' active' : ''}" 
@@ -385,9 +387,37 @@ export class SearchModalSnippet extends HTMLElement {
         data-index="${index}"
         data-url="${escapeHTML(result.url || '')}"
       >
-        <div class="modal-result-title">${escapeHTML(result.title || '')}</div>
-        ${result.description ? `<div class="modal-result-description">${escapeHTML(result.description)}</div>` : ''}
-        ${result.url ? `<a href="${escapeHTML(result.url)}" class="modal-result-url" tabindex="-1">${escapeHTML(result.url)}</a>` : ''}
+        ${imageHTML}
+        <div class="modal-result-content">
+          <div class="modal-result-title">${escapeHTML(result.title || '')}</div>
+          ${result.description ? `<div class="modal-result-description">${escapeHTML(result.description)}</div>` : ''}
+          ${result.url ? `<a href="${escapeHTML(result.url)}" class="modal-result-url" tabindex="-1">${escapeHTML(result.url)}</a>` : ''}
+        </div>
+      </div>
+    `;
+  }
+
+  private renderResultImage(imageUrl: string | undefined, alt: string): string {
+    const placeholderSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`;
+
+    if (!imageUrl) {
+      return `
+        <div class="modal-result-image-container">
+          <div class="modal-result-image-placeholder">${placeholderSVG}</div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="modal-result-image-container">
+        <div class="modal-result-image-loading"></div>
+        <div class="modal-result-image-placeholder" style="display: none;">${placeholderSVG}</div>
+        <img 
+          class="modal-result-image" 
+          src="${escapeHTML(imageUrl)}" 
+          alt="${escapeHTML(alt)}"
+          loading="lazy"
+        />
       </div>
     `;
   }
@@ -409,6 +439,26 @@ export class SearchModalSnippet extends HTMLElement {
       item.addEventListener('mouseenter', () => {
         this.activeIndex = index;
         this.updateActiveResult();
+      });
+    });
+
+    // Image load/error handlers
+    const images = this.resultsContainer?.querySelectorAll('.modal-result-image');
+    images?.forEach((img) => {
+      img.addEventListener('load', () => {
+        img.classList.add('loaded');
+        const container = img.closest('.modal-result-image-container');
+        container?.querySelector('.modal-result-image-loading')?.remove();
+      });
+
+      img.addEventListener('error', () => {
+        const container = img.closest('.modal-result-image-container');
+        container?.querySelector('.modal-result-image-loading')?.remove();
+        const placeholder = container?.querySelector(
+          '.modal-result-image-placeholder'
+        ) as HTMLElement;
+        if (placeholder) placeholder.style.display = 'flex';
+        (img as HTMLElement).style.display = 'none';
       });
     });
   }

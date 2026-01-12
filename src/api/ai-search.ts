@@ -6,7 +6,7 @@
 import type {
   ChatTextResponse,
   ChatTypes,
-  SearchAPIResponse,
+  AISearchAPIResponse,
   SearchError,
   SearchOptions,
   SearchResult,
@@ -59,7 +59,7 @@ export class AISearchClient extends Client {
       if (!response.body) {
         throw new Error('Response body is empty');
       }
-      const result: SearchAPIResponse = await response.json();
+      const result: AISearchAPIResponse = await response.json();
       if (result.success && result.result) {
         return result.result.chunks.map(
           (item) =>
@@ -69,6 +69,7 @@ export class AISearchClient extends Client {
               title: item.item.metadata.title,
               description: item.item.metadata.description,
               url: item.item.key,
+              image: item.item.metadata.image || undefined,
               metadata: item.item.metadata as unknown as Record<string, unknown>,
             }) satisfies SearchResult
         );

@@ -30,6 +30,7 @@ export interface SearchResult {
   title: string;
   description: string;
   url?: string;
+  image?: string;
   metadata?: Record<string, unknown>;
   type: 'result';
 }
@@ -108,38 +109,36 @@ export interface RequestState {
   timestamp: number;
 }
 
-
-
-export interface SearchAPIResponse {
-  success: boolean
-  result: Result
+export interface AISearchAPIResponse {
+  success: boolean;
+  result: Result;
 }
 
 export interface Result {
-  search_query: string
-  chunks: Chunk[]
+  search_query: string;
+  chunks: Chunk[];
 }
 
 export interface Chunk {
-  id: string
-  type: string
-  text: string
-  item: Item
-  scoring_details: ScoringDetails
+  id: string;
+  type: string;
+  text: string;
+  item: Item;
+  scoring_details: ScoringDetails;
 }
 
 export interface Item {
-  key: string
-  timestamp: number
-  metadata: Metadata
+  key: string;
+  timestamp: number;
+  metadata: Metadata;
 }
 
 export interface Metadata {
-  description: string
-  image: string
-  title: string
+  description: string;
+  image: string;
+  title: string;
 }
 
 export interface ScoringDetails {
-  vector_score: number
+  vector_score: number;
 }

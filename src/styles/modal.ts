@@ -145,6 +145,75 @@ export const modalStyles = `
   cursor: pointer;
   transition: var(--search-snippet-transition-fast);
   display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--search-snippet-spacing-md);
+}
+
+/* Image thumbnail container */
+.modal-result-image-container {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--search-snippet-surface);
+  border: var(--search-snippet-border-width) solid var(--search-snippet-border-color);
+  position: relative;
+}
+
+.modal-result-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--search-snippet-transition);
+}
+
+.modal-result-image.loaded {
+  opacity: 1;
+}
+
+/* Loading shimmer */
+.modal-result-image-loading {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--search-snippet-surface) 25%,
+    var(--search-snippet-border-color) 50%,
+    var(--search-snippet-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: modal-image-shimmer 1.5s infinite;
+}
+
+@keyframes modal-image-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Placeholder icon */
+.modal-result-image-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--search-snippet-text-secondary);
+  opacity: 0.5;
+}
+
+.modal-result-image-placeholder svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Content wrapper */
+.modal-result-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
   flex-direction: column;
   gap: var(--search-snippet-spacing-xs);
 }

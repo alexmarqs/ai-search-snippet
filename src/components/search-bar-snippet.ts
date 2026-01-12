@@ -240,13 +240,43 @@ export class SearchBarSnippet extends HTMLElement {
   }
 
   private renderResult(result: SearchResult): string {
+    const imageHTML = this.renderResultImage(result.image, result.title);
+
     return `
             <div class="search-result-item" role="button" tabindex="0" data-result-id="${escapeHTML(result.url || '')}">
-                <div class="search-result-title">${escapeHTML(result.title || '')}</div>
-                <div class="search-result-snippet">${escapeHTML(result.description || '')}</div>
-                ${result.url ? `<a href="${escapeHTML(result.url)}" class="search-result-url">${escapeHTML(result.url)}</a>` : ''}
+                ${imageHTML}
+                <div class="search-result-content">
+                    <div class="search-result-title">${escapeHTML(result.title || '')}</div>
+                    <div class="search-result-snippet">${escapeHTML(result.description || '')}</div>
+                    ${result.url ? `<a href="${escapeHTML(result.url)}" class="search-result-url">${escapeHTML(result.url)}</a>` : ''}
+                </div>
             </div>
         `;
+  }
+
+  private renderResultImage(imageUrl: string | undefined, alt: string): string {
+    const placeholderSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`;
+
+    if (!imageUrl) {
+      return `
+        <div class="search-result-image-container">
+          <div class="search-result-image-placeholder">${placeholderSVG}</div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="search-result-image-container">
+        <div class="search-result-image-loading"></div>
+        <div class="search-result-image-placeholder" style="display: none;">${placeholderSVG}</div>
+        <img 
+          class="search-result-image" 
+          src="${escapeHTML(imageUrl)}" 
+          alt="${escapeHTML(alt)}"
+          loading="lazy"
+        />
+      </div>
+    `;
   }
 
   private attachResultHandlers(): void {
@@ -266,6 +296,26 @@ export class SearchBarSnippet extends HTMLElement {
         }
       });
     }
+
+    // Image load/error handlers
+    const images = this.container?.querySelectorAll('.search-result-image');
+    images?.forEach((img) => {
+      img.addEventListener('load', () => {
+        img.classList.add('loaded');
+        const container = img.closest('.search-result-image-container');
+        container?.querySelector('.search-result-image-loading')?.remove();
+      });
+
+      img.addEventListener('error', () => {
+        const container = img.closest('.search-result-image-container');
+        container?.querySelector('.search-result-image-loading')?.remove();
+        const placeholder = container?.querySelector(
+          '.search-result-image-placeholder'
+        ) as HTMLElement;
+        if (placeholder) placeholder.style.display = 'flex';
+        (img as HTMLElement).style.display = 'none';
+      });
+    });
   }
 
   private showLoadingState(): void {
