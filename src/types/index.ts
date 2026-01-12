@@ -71,6 +71,7 @@ export interface SearchOptions {
   query?: string;
   streaming?: boolean;
   signal?: AbortSignal;
+  maxResults?: number;
 }
 
 /**
@@ -135,7 +136,7 @@ export interface Item {
 
 export interface Metadata {
   description: string;
-  image: string;
+  image?: string;
   title: string;
 }
 
