@@ -11,7 +11,7 @@
   "routes": [
     {
       "pattern": "search.ai.cloudflare.com/*",
-      "zone_id": "search.ai.cloudflare.com"
+      "zone_name": "search.ai.cloudflare.com"
     }
   ]
 }
