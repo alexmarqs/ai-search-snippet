@@ -3224,7 +3224,7 @@ export default defineConfig({
                     if (isSoftware) return false;
                 }
                 return true;
-            } catch (e) {
+            } catch (_e) {
                 return false;
             }
         }
@@ -3319,11 +3319,11 @@ export default defineConfig({
                 const targetTab = tab.dataset.tab;
 
                 // Update active tab
-                document.querySelectorAll('.quickstart-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.quickstart-tab').forEach(t => { t.classList.remove('active') });
                 tab.classList.add('active');
 
                 // Update active panel
-                document.querySelectorAll('.quickstart-panel').forEach(p => p.classList.remove('active'));
+                document.querySelectorAll('.quickstart-panel').forEach(p => { p.classList.remove('active') });
                 document.querySelector(`.quickstart-panel[data-panel="${targetTab}"]`)?.classList.add('active');
             });
         });
@@ -3339,7 +3339,7 @@ export default defineConfig({
                     await navigator.clipboard.writeText(codeBlock.textContent);
                     const orig = btn.textContent;
                     btn.textContent = 'Copied!';
-                    setTimeout(() => btn.textContent = orig, 2000);
+                    setTimeout(() => { btn.textContent = orig }, 2000);
                 } catch (e) {
                     console.error('Copy failed:', e);
                 }
@@ -3404,7 +3404,7 @@ export default defineConfig({
         const cssValuesShared = new Map();
 
         // Initialize defaults
-        PROP_CONFIGS.forEach(p => propValues.set(p.name, p.defaultValue));
+        PROP_CONFIGS.forEach(p => { propValues.set(p.name, p.defaultValue) });
         CSS_VAR_CONFIGS.forEach(c => {
             if (c.themeable) {
                 cssValuesLight.set(c.name, c.lightDefault);
@@ -3537,8 +3537,8 @@ export default defineConfig({
 
             const css = [];
             const currentCssValues = currentThemeMode === 'light' ? cssValuesLight : cssValuesDark;
-            currentCssValues.forEach((v, n) => css.push(`${n}: ${v}`));
-            cssValuesShared.forEach((v, n) => css.push(`${n}: ${v}`));
+            currentCssValues.forEach((v, n) => { css.push(`${n}: ${v}`) });
+            cssValuesShared.forEach((v, n) => { css.push(`${n}: ${v}`) });
             el.style.cssText = css.join('; ');
 
             if (currentSnippet === 'search-modal') {
@@ -3598,7 +3598,7 @@ export default defineConfig({
         }
 
         function resetConfig() {
-            PROP_CONFIGS.forEach(p => propValues.set(p.name, p.defaultValue));
+            PROP_CONFIGS.forEach(p => { propValues.set(p.name, p.defaultValue) });
             CSS_VAR_CONFIGS.forEach(c => {
                 if (c.themeable) {
                     cssValuesLight.set(c.name, c.lightDefault);
@@ -3621,7 +3621,7 @@ export default defineConfig({
                 if (btn) {
                     const orig = btn.innerHTML;
                     btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
-                    setTimeout(() => btn.innerHTML = orig, 2000);
+                    setTimeout(() => { btn.innerHTML = orig }, 2000);
                 }
             } catch (e) {
                 console.error('Copy failed:', e);
@@ -3688,7 +3688,7 @@ export default defineConfig({
             // Tab switching inside modal
             document.querySelectorAll('.config-tab').forEach(tab => {
                 tab.addEventListener('click', e => {
-                    document.querySelectorAll('.config-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.config-tab').forEach(t => { t.classList.remove('active') });
                     e.target.classList.add('active');
                     currentSnippet = e.target.dataset.snippet;
                     renderProps();
@@ -3699,7 +3699,7 @@ export default defineConfig({
             // Theme mode toggle
             document.querySelectorAll('.theme-mode-btn').forEach(btn => {
                 btn.addEventListener('click', e => {
-                    document.querySelectorAll('.theme-mode-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.theme-mode-btn').forEach(b => { b.classList.remove('active') });
                     e.currentTarget.classList.add('active');
                     currentThemeMode = e.currentTarget.dataset.mode;
                     renderCSSVars();
