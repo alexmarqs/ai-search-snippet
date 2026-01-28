@@ -1,6 +1,6 @@
 {
   "name": "@cloudflare/ai-search-snippet",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "A production-ready, self-contained TypeScript Web Component library for search and chat interfaces with streaming support",
   "type": "module",
   "main": "./dist/search-snippet.umd.js",
@@ -44,11 +44,11 @@
     "build:app": "vite build -c vite.config.ts",
     "build:lib": "tsc && vite build -c vite.build.config.ts",
     "preview": "vite preview",
-    "format": "biome format --write .",
-    "format:check": "biome format .",
-    "lint": "biome lint .",
-    "lint:fix": "biome lint --write .",
-    "check": "biome check --write .",
+    "format": "biome format --write ./src ./index.html",
+    "format:check": "biome format ./src ./index.html",
+    "lint": "biome lint ./src ./index.html",
+    "lint:fix": "biome lint --write ./src ./index.html",
+    "check": "biome check --write ./src ./index.html",
     "prepublishOnly": "npm run build:lib"
   },
   "devDependencies": {
