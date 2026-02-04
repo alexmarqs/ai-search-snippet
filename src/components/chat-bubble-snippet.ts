@@ -5,6 +5,7 @@
  */
 
 import type { Client } from '../api/index.ts';
+import { POWERED_BY_BRANDING } from '../constants.ts';
 import { chatStyles } from '../styles/chat.ts';
 import { baseStyles } from '../styles/theme.ts';
 import type { SearchSnippetProps } from '../types/index.ts';
@@ -14,7 +15,6 @@ import {
   parseAttribute,
   parseBooleanAttribute,
 } from '../utils/index.ts';
-import { POWERED_BY_BRANDING } from '../constants.ts';
 import type { Message } from './chat-view.ts';
 import { ChatView } from './chat-view.ts';
 

@@ -20,15 +20,18 @@ export class AISearchClient extends Client {
     operation: 'ai-search' | 'search' | 'chat/completions',
     signal?: AbortSignal
   ): Promise<Response> {
+    const sourceHeader = operation === 'search' ? 'snippet-search' : 'snippet-chat-completions';
     return fetch(`${this.baseUrl}/${operation}`, {
       method: 'POST',
       body: JSON.stringify({
         messages: [{ role: 'user', content: options.query }],
         stream: options.streaming,
         max_results: options.maxResults,
+        ...(operation === 'search' && { retrieval_options: { metadata_only: true } }),
       }),
       headers: {
         'Content-Type': 'application/json',
+        'cf-ai-search-source': sourceHeader,
       },
       signal,
     });
