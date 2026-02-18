@@ -5,6 +5,8 @@
 import { AISearchClient } from '../api/ai-search.ts';
 import type { Client } from '../api/index.ts';
 
+export { LOADING_MESSAGE_INTERVAL_MS, LOADING_MESSAGES } from './loading-messages.ts';
+
 /**
  * Debounce function to limit API calls
  */

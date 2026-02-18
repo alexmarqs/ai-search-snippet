@@ -5,7 +5,14 @@
 
 import type { Client } from '../api/index.ts';
 import type { SearchSnippetProps } from '../types/index.ts';
-import { createCustomEvent, escapeHTML, formatTimestamp, generateId } from '../utils/index.ts';
+import {
+  createCustomEvent,
+  escapeHTML,
+  formatTimestamp,
+  generateId,
+  LOADING_MESSAGE_INTERVAL_MS,
+  LOADING_MESSAGES,
+} from '../utils/index.ts';
 import { markdownToHtml } from '../utils/markdown.ts';
 export interface Message {
   id: string;
@@ -24,6 +31,8 @@ export class ChatView {
   private messages: Message[] = [];
   private isStreaming = false;
   private currentStreamingMessageId: string | null = null;
+  private loadingMessageInterval: ReturnType<typeof setInterval> | null = null;
+  private loadingMessageIndex = 0;
 
   // Event handler references for cleanup
   private handleInputResize: ((e: Event) => void) | null = null;
@@ -276,7 +285,7 @@ export class ChatView {
         <div class="chat-message-content">
           <div class="chat-message-bubble">
             ${message.content ? `<div class="chat-message-text">${markdownToHtml(message.content)}</div>` : ''}
-            ${isStreaming ? '<div class="chat-streaming"><span class="chat-streaming-dot"></span><span class="chat-streaming-dot"></span><span class="chat-streaming-dot"></span></div>' : ''}
+            ${isStreaming ? `<div class="chat-streaming"><span class="chat-streaming-dot"></span><span class="chat-streaming-dot"></span><span class="chat-streaming-dot"></span><span class="loading-text">${LOADING_MESSAGES[this.loadingMessageIndex]}</span></div>` : ''}
           </div>
           <div class="chat-message-metadata">
             <span class="chat-message-time">${formatTimestamp(message.timestamp)}</span>
@@ -313,6 +322,29 @@ export class ChatView {
       this.sendButton.disabled = streaming;
       this.sendButton.innerHTML = streaming ? '<div class="loading"></div>' : '<span>Send</span>';
     }
+
+    if (streaming) {
+      this.startLoadingMessages();
+    } else {
+      this.clearLoadingMessages();
+    }
+  }
+
+  private startLoadingMessages(): void {
+    this.loadingMessageIndex = Math.floor(Math.random() * LOADING_MESSAGES.length);
+    this.loadingMessageInterval = setInterval(() => {
+      this.loadingMessageIndex = (this.loadingMessageIndex + 1) % LOADING_MESSAGES.length;
+      if (this.isStreaming) {
+        this.renderMessages(true);
+      }
+    }, LOADING_MESSAGE_INTERVAL_MS);
+  }
+
+  private clearLoadingMessages(): void {
+    if (this.loadingMessageInterval) {
+      clearInterval(this.loadingMessageInterval);
+      this.loadingMessageInterval = null;
+    }
   }
 
   /**
@@ -342,6 +374,8 @@ export class ChatView {
    * Destroy and cleanup
    */
   public destroy(): void {
+    this.clearLoadingMessages();
+
     if (this.isStreaming) {
       this.client.cancelAllRequests();
     }

@@ -337,6 +337,27 @@ export const baseStyles = `
   to { transform: rotate(360deg); }
 }
 
+/* Loading message animation */
+@keyframes loading-message-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.loading-text {
+  font-size: var(--search-snippet-font-size-sm);
+  color: var(--search-snippet-text-secondary);
+}
+
+.loading-text-animate {
+  animation: loading-message-in 0.3s ease-out;
+}
+
 /* Error message */
 .error {
   padding: var(--search-snippet-spacing-md);

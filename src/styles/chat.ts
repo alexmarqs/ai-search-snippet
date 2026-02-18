@@ -197,6 +197,10 @@ export const chatStyles = `
   }
 }
 
+.chat-streaming .loading-text {
+  margin-left: var(--search-snippet-spacing-xs);
+}
+
 /* Input area */
 .chat-input-area {
   padding: var(--search-snippet-spacing-md);

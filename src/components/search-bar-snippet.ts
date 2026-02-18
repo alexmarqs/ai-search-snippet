@@ -13,6 +13,8 @@ import {
   createCustomEvent,
   debounce,
   escapeHTML,
+  LOADING_MESSAGE_INTERVAL_MS,
+  LOADING_MESSAGES,
   parseAttribute,
   parseBooleanAttribute,
   parseNumberAttribute,
@@ -29,6 +31,8 @@ export class SearchBarSnippet extends HTMLElement {
   private searchButton: HTMLButtonElement | null = null;
   private debouncedSearch: ((query: string) => void) | null = null;
   private currentSearchController: AbortController | null = null;
+  private loadingMessageInterval: ReturnType<typeof setInterval> | null = null;
+  private loadingMessageIndex = 0;
 
   // Event handler references for cleanup
   private handleInputChange: ((e: Event) => void) | null = null;
@@ -230,6 +234,7 @@ export class SearchBarSnippet extends HTMLElement {
   }
 
   private displayResults(results: SearchResult[], query: string): void {
+    this.clearLoadingInterval();
     if (!this.resultsContainer) return;
 
     if (results.length === 0) {
@@ -339,15 +344,41 @@ export class SearchBarSnippet extends HTMLElement {
   private showLoadingState(): void {
     if (!this.resultsContainer) return;
 
+    this.clearLoadingInterval();
+    this.loadingMessageIndex = Math.floor(Math.random() * LOADING_MESSAGES.length);
+
     this.resultsContainer.innerHTML = `
             <div class="search-loading">
                 <div class="loading" aria-label="Loading"></div>
-                <div>Searching...</div>
+                <div class="loading-text loading-text-animate">${LOADING_MESSAGES[this.loadingMessageIndex]}</div>
             </div>
         `;
+
+    this.startLoadingInterval();
+  }
+
+  private startLoadingInterval(): void {
+    this.loadingMessageInterval = setInterval(() => {
+      this.loadingMessageIndex = (this.loadingMessageIndex + 1) % LOADING_MESSAGES.length;
+      const textEl = this.resultsContainer?.querySelector('.loading-text');
+      if (textEl) {
+        textEl.classList.remove('loading-text-animate');
+        void (textEl as HTMLElement).offsetWidth;
+        textEl.textContent = LOADING_MESSAGES[this.loadingMessageIndex];
+        textEl.classList.add('loading-text-animate');
+      }
+    }, LOADING_MESSAGE_INTERVAL_MS);
+  }
+
+  private clearLoadingInterval(): void {
+    if (this.loadingMessageInterval) {
+      clearInterval(this.loadingMessageInterval);
+      this.loadingMessageInterval = null;
+    }
   }
 
   private showEmptyState(): void {
+    this.clearLoadingInterval();
     if (!this.resultsContainer) return;
 
     this.resultsContainer.innerHTML = `
@@ -365,6 +396,7 @@ export class SearchBarSnippet extends HTMLElement {
   }
 
   private showNoResultsState(query: string): void {
+    this.clearLoadingInterval();
     if (!this.resultsContainer) return;
 
     this.resultsContainer.innerHTML = `
@@ -382,6 +414,7 @@ export class SearchBarSnippet extends HTMLElement {
   }
 
   private showErrorState(message: string): void {
+    this.clearLoadingInterval();
     if (!this.resultsContainer) return;
 
     this.resultsContainer.innerHTML = `
@@ -406,6 +439,8 @@ export class SearchBarSnippet extends HTMLElement {
   }
 
   private cleanup(): void {
+    this.clearLoadingInterval();
+
     // Cancel any in-flight search request
     if (this.currentSearchController) {
       this.currentSearchController.abort();
