@@ -69,39 +69,20 @@ export class AISearchClient extends Client {
       }
       const result: AISearchAPIResponse = await response.json();
       if (result.success && result.result) {
-        // Aggregate by item.key, keeping the highest vector_score for duplicates
-        const aggregated = new Map<
-          string,
-          { chunk: (typeof result.result.chunks)[0]; score: number }
-        >();
-
-        for (const chunk of result.result.chunks) {
-          const key = chunk.item.key;
-          const score = chunk.scoring_details.vector_score;
-
-          if (!aggregated.has(key) || (aggregated.get(key)?.score ?? 0) < score) {
-            aggregated.set(key, { chunk, score });
-          }
-        }
-
-        // Sort by score descending and return top 10
-        return Array.from(aggregated.values())
-          .sort((a, b) => b.score - a.score)
-          .slice(0, 10)
-          .map(
-            ({ chunk }) =>
-              ({
-                type: 'result',
-                id: chunk.id,
-                title: decodeHTMLEntities(chunk.item.metadata.title),
-                description: chunk.item.metadata.description
-                  ? decodeHTMLEntities(chunk.item.metadata.description)
-                  : '',
-                url: chunk.item.key,
-                image: chunk.item.metadata.image || undefined,
-                metadata: chunk.item.metadata as unknown as Record<string, unknown>,
-              }) satisfies SearchResult
-          );
+        return result.result.chunks.slice(0, 10).map(
+          (chunk) =>
+            ({
+              type: 'result',
+              id: chunk.id,
+              title: decodeHTMLEntities(chunk.item.metadata.title),
+              description: chunk.item.metadata.description
+                ? decodeHTMLEntities(chunk.item.metadata.description)
+                : '',
+              url: chunk.item.key,
+              image: chunk.item.metadata.image || undefined,
+              metadata: chunk.item.metadata as unknown as Record<string, unknown>,
+            }) satisfies SearchResult
+        );
       }
 
       if (result.success === false) {
