@@ -72,6 +72,7 @@ export class SearchModalSnippet extends HTMLElement {
       'debounce-ms',
       'hide-branding',
       'show-url',
+      'hide-thumbnails',
     ] as const;
   }
 
@@ -112,6 +113,7 @@ export class SearchModalSnippet extends HTMLElement {
       useMetaKey: this.getAttribute('use-meta-key') !== 'false',
       hideBranding: parseBooleanAttribute(this.getAttribute('hide-branding'), false),
       showUrl: parseBooleanAttribute(this.getAttribute('show-url'), false),
+      hideThumbnails: parseBooleanAttribute(this.getAttribute('hide-thumbnails'), false),
     };
   }
 
@@ -409,7 +411,9 @@ export class SearchModalSnippet extends HTMLElement {
 
   private renderResult(result: SearchResult, index: number): string {
     const props = this.getProps();
-    const imageHTML = this.renderResultImage(result.image, result.title);
+    const imageHTML = props.hideThumbnails
+      ? ''
+      : this.renderResultImage(result.image, result.title);
     const href = result.url ? escapeHTML(result.url) : '#';
 
     return `

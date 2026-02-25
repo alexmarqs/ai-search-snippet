@@ -49,6 +49,7 @@ export class SearchBarSnippet extends HTMLElement {
       'theme',
       'hide-branding',
       'show-url',
+      'hide-thumbnails',
     ] as const;
   }
 
@@ -88,6 +89,7 @@ export class SearchBarSnippet extends HTMLElement {
       theme: parseAttribute(this.getAttribute('theme'), 'auto') as 'light' | 'dark' | 'auto',
       hideBranding: parseBooleanAttribute(this.getAttribute('hide-branding'), false),
       showUrl: parseBooleanAttribute(this.getAttribute('show-url'), false),
+      hideThumbnails: parseBooleanAttribute(this.getAttribute('hide-thumbnails'), false),
     };
   }
 
@@ -266,7 +268,9 @@ export class SearchBarSnippet extends HTMLElement {
 
   private renderResult(result: SearchResult): string {
     const props = this.getProps();
-    const imageHTML = this.renderResultImage(result.image, result.title);
+    const imageHTML = props.hideThumbnails
+      ? ''
+      : this.renderResultImage(result.image, result.title);
     const href = result.url ? escapeHTML(result.url) : '#';
 
     return `

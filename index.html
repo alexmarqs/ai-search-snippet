@@ -2166,7 +2166,7 @@
                     </div>
                     <div class="code-content">
                         <pre class="language-html"><code class="language-html">&lt;!-- Import the library --&gt;
-&lt;script type="module" src="https://cdn.example.com/search-snippet.es.js"&gt;&lt;/script&gt;
+&lt;script type="module" src="https://<hash>.search.ai.cloudflare.com/assets/v0.0.25/search-snippet.es.js"&gt;&lt;/script&gt;
 
 &lt;!-- 1. Chat Bubble Widget (Fixed bottom-right) --&gt;
 &lt;chat-bubble-snippet 
@@ -2480,6 +2480,12 @@ export default defineConfig({
                                 <td class="var-default">false</td>
                                 <td>Show URL in search results</td>
                             </tr>
+                            <tr>
+                                <td><code>hide-thumbnails</code></td>
+                                <td>boolean</td>
+                                <td class="var-default">false</td>
+                                <td>Hide result thumbnails/images</td>
+                            </tr>
                         </tbody>
                     </table>
                     <h5 style="margin-top: 1rem; margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--stone-700);">
@@ -2534,6 +2540,12 @@ export default defineConfig({
                                 <td>boolean</td>
                                 <td class="var-default">false</td>
                                 <td>Show URL in search results</td>
+                            </tr>
+                            <tr>
+                                <td><code>hide-thumbnails</code></td>
+                                <td>boolean</td>
+                                <td class="var-default">false</td>
+                                <td>Hide result thumbnails/images</td>
                             </tr>
                             <tr>
                                 <td><code>shortcut</code></td>
@@ -3506,6 +3518,7 @@ export default defineConfig({
             { name: 'max-results', type: 'number', defaultValue: 10, description: 'Maximum number of results', appliesTo: ['search-bar', 'search-modal'] },
             { name: 'debounce-ms', type: 'number', defaultValue: 300, description: 'Debounce delay in milliseconds', appliesTo: ['search-bar', 'search-modal'] },
             { name: 'show-url', type: 'boolean', defaultValue: false, description: 'Show URL in search results', appliesTo: ['search-bar', 'search-modal'] },
+            { name: 'hide-thumbnails', type: 'boolean', defaultValue: false, description: 'Hide result thumbnails', appliesTo: ['search-bar', 'search-modal'] },
             { name: 'theme', type: 'select', options: ['light', 'dark', 'auto'], defaultValue: 'auto', description: 'Color theme', appliesTo: ['search-bar', 'search-modal', 'chat-bubble', 'chat-page'] },
             { name: 'shortcut', type: 'text', defaultValue: 'k', description: 'Keyboard shortcut key', appliesTo: ['search-modal'] },
             { name: 'use-meta-key', type: 'select', options: ['true', 'false'], defaultValue: 'true', description: 'Use Cmd/Ctrl modifier', appliesTo: ['search-modal'] },
@@ -3799,7 +3812,7 @@ export default defineConfig({
 
             // Use string concatenation to avoid Vite HTML parser issues with template literals
             let code = '<!-' + '- Import the library -' + '->\n';
-            code += '<' + 'script type="module" src="https://cdn.example.com/search-snippet.es.js"><' + '/script>\n\n';
+            code += '<' + 'script type="module" src="https://<hash>.search.ai.cloudflare.com/assets/v0.0.25/search-snippet.es.js"><' + '/script>\n\n';
             code += `<${tag}${propsStr}>\n`;
             code += `</${tag}>`;
             if (cssCode) {

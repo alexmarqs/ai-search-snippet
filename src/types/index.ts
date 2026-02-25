@@ -22,6 +22,8 @@ export interface SearchSnippetProps {
   hideBranding?: boolean;
   /** Show URL in search results (default: false) */
   showUrl?: boolean;
+  /** Hide thumbnails in search results (default: false) */
+  hideThumbnails?: boolean;
 }
 
 /**

@@ -159,15 +159,13 @@ a.search-result-item {
   height: 64px;
   border-radius: calc(var(--search-snippet-border-radius) - 4px);
   overflow: hidden;
-  background: var(--search-snippet-surface);
-  border: var(--search-snippet-border-width) solid var(--search-snippet-border-color);
   position: relative;
 }
 
 .search-result-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   opacity: 0;
   transition: opacity var(--search-snippet-transition);
 }
