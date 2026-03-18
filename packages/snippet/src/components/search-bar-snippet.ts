@@ -50,6 +50,7 @@ export class SearchBarSnippet extends HTMLElement {
       'hide-branding',
       'show-url',
       'hide-thumbnails',
+      'see-more',
     ] as const;
   }
 
@@ -90,6 +91,7 @@ export class SearchBarSnippet extends HTMLElement {
       hideBranding: parseBooleanAttribute(this.getAttribute('hide-branding'), false),
       showUrl: parseBooleanAttribute(this.getAttribute('show-url'), false),
       hideThumbnails: parseBooleanAttribute(this.getAttribute('hide-thumbnails'), false),
+      seeMore: parseAttribute(this.getAttribute('see-more'), ''),
     };
   }
 
@@ -248,6 +250,15 @@ export class SearchBarSnippet extends HTMLElement {
       ? ''
       : `<div class="powered-by-inline">${POWERED_BY_BRANDING}</div>`;
 
+    const seeMoreHTML = props.seeMore
+      ? `<div class="search-footer">
+            <a href="${escapeHTML(props.seeMore + encodeURIComponent(query))}" class="search-see-more">
+              <span>See more results</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>`
+      : '';
+
     const resultsHTML = `
             <div class="search-header">
                 <div class="search-count">
@@ -258,6 +269,7 @@ export class SearchBarSnippet extends HTMLElement {
             <div class="search-results">
                 ${results.map((result) => this.renderResult(result)).join('')}
             </div>
+            ${seeMoreHTML}
         `;
 
     this.resultsContainer.innerHTML = resultsHTML;

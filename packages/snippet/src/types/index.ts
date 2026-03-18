@@ -24,6 +24,8 @@ export interface SearchSnippetProps {
   showUrl?: boolean;
   /** Hide thumbnails in search results (default: false) */
   hideThumbnails?: boolean;
+  /** URL template for "See more" link. The search query is appended URL-encoded. Example: "https://example.com/search?q=" */
+  seeMore?: string;
 }
 
 /**

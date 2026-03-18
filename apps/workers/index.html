@@ -2528,6 +2528,13 @@ export default defineConfig({
                                 <td class="var-default">false</td>
                                 <td>Hide result thumbnails/images</td>
                             </tr>
+                            <tr>
+                                <td><code>see-more</code></td>
+                                <td>string</td>
+                                <td class="var-default">-</td>
+                                <td>URL template for "See more" link. The search query is appended URL-encoded (e.g.
+                                    "https://example.com/search?q=")</td>
+                            </tr>
                         </tbody>
                     </table>
                     <h5 style="margin-top: 1rem; margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--stone-700);">
@@ -2600,6 +2607,13 @@ export default defineConfig({
                                 <td>"true" | "false"</td>
                                 <td class="var-default">"true"</td>
                                 <td>Use Cmd/Ctrl modifier for keyboard shortcut</td>
+                            </tr>
+                            <tr>
+                                <td><code>see-more</code></td>
+                                <td>string</td>
+                                <td class="var-default">-</td>
+                                <td>URL template for "See more" link. The search query is appended URL-encoded (e.g.
+                                    "https://example.com/search?q=")</td>
                             </tr>
                         </tbody>
                     </table>
@@ -3395,7 +3409,8 @@ export default defineConfig({
 
     <!-- Search Modal (hidden by default) -->
     <search-modal-snippet api-url="https://70b18965-6ccb-40df-902d-313de9c5c89e.search.ai.cloudflare.com/"
-        placeholder="Search documentation..." max-results="8">
+        placeholder="Search documentation..." max-results="8"
+        see-more="https://developers.cloudflare.com/search/?q=">
     </search-modal-snippet>
 
     <!-- Import the library -->
@@ -3561,6 +3576,7 @@ export default defineConfig({
             { name: 'debounce-ms', type: 'number', defaultValue: 300, description: 'Debounce delay in milliseconds', appliesTo: ['search-bar', 'search-modal'] },
             { name: 'show-url', type: 'boolean', defaultValue: false, description: 'Show URL in search results', appliesTo: ['search-bar', 'search-modal'] },
             { name: 'hide-thumbnails', type: 'boolean', defaultValue: false, description: 'Hide result thumbnails', appliesTo: ['search-bar', 'search-modal'] },
+            { name: 'see-more', type: 'text', defaultValue: '', description: 'URL for "See more" link (query appended)', appliesTo: ['search-bar', 'search-modal'] },
             { name: 'theme', type: 'select', options: ['light', 'dark', 'auto'], defaultValue: 'auto', description: 'Color theme', appliesTo: ['search-bar', 'search-modal', 'chat-bubble', 'chat-page'] },
             { name: 'shortcut', type: 'text', defaultValue: 'k', description: 'Keyboard shortcut key', appliesTo: ['search-modal'] },
             { name: 'use-meta-key', type: 'select', options: ['true', 'false'], defaultValue: 'true', description: 'Use Cmd/Ctrl modifier', appliesTo: ['search-modal'] },

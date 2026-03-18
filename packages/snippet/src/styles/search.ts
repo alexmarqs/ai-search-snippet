@@ -278,11 +278,27 @@ a.search-result-item:focus-visible {
 /* Search footer */
 .search-footer {
   padding: var(--search-snippet-spacing-md);
-  border-top: var(--search-snippet-border-width) solid var(--search-snippet-border-color);
+  padding-bottom: var(--search-snippet-spacing-xs);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--search-snippet-spacing-sm);
+}
+
+/* See more link */
+.search-see-more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--search-snippet-spacing-xs);
+  font-size: var(--search-snippet-font-size-sm);
+  color: var(--search-snippet-primary-color);
+  text-decoration: none;
+  font-weight: var(--search-snippet-font-weight-medium);
+  transition: color var(--search-snippet-transition-fast);
+}
+
+.search-see-more:hover {
+  text-decoration: underline;
 }
 
 /* Loading state for search */

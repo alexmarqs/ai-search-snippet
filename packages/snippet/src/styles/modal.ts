@@ -371,6 +371,26 @@ a.modal-result-item:focus-visible {
   color: var(--search-snippet-primary-color);
 }
 
+/* See more link */
+.modal-see-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--search-snippet-spacing-xs);
+  padding: var(--search-snippet-spacing-md);
+  font-size: var(--search-snippet-font-size-sm);
+  color: var(--search-snippet-primary-color);
+  text-decoration: none;
+  font-weight: var(--search-snippet-font-weight-medium);
+  transition: background var(--search-snippet-transition-fast);
+  padding-bottom: var(--search-snippet-spacing-xs);
+}
+
+.modal-see-more:hover {
+  background: var(--search-snippet-hover);
+  text-decoration: underline;
+}
+
 /* Responsive adjustments */
 @media (max-width: 640px) {
   .modal-container {

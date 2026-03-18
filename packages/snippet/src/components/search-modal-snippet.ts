@@ -73,6 +73,7 @@ export class SearchModalSnippet extends HTMLElement {
       'hide-branding',
       'show-url',
       'hide-thumbnails',
+      'see-more',
     ] as const;
   }
 
@@ -114,6 +115,7 @@ export class SearchModalSnippet extends HTMLElement {
       hideBranding: parseBooleanAttribute(this.getAttribute('hide-branding'), false),
       showUrl: parseBooleanAttribute(this.getAttribute('show-url'), false),
       hideThumbnails: parseBooleanAttribute(this.getAttribute('hide-thumbnails'), false),
+      seeMore: parseAttribute(this.getAttribute('see-more'), ''),
     };
   }
 
@@ -388,9 +390,16 @@ export class SearchModalSnippet extends HTMLElement {
       return;
     }
 
+    const props = this.getProps();
     const resultsHTML = results.map((result, index) => this.renderResult(result, index)).join('');
+    const seeMoreHTML = props.seeMore
+      ? `<a href="${escapeHTML(props.seeMore + encodeURIComponent(query))}" class="modal-see-more">
+            <span>See more results</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>`
+      : '';
 
-    this.resultsContainer.innerHTML = resultsHTML;
+    this.resultsContainer.innerHTML = resultsHTML + seeMoreHTML;
 
     // Update footer count
     if (this.footerCount) {

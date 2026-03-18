@@ -74,12 +74,12 @@ export class AISearchClient extends Client {
             ({
               type: 'result',
               id: chunk.id,
-              title: decodeHTMLEntities(chunk.item.metadata.title),
-              description: chunk.item.metadata.description
-                ? decodeHTMLEntities(chunk.item.metadata.description)
+              title: decodeHTMLEntities(chunk.item.metadata?.title),
+              description: chunk.item.metadata?.description
+                ? decodeHTMLEntities(chunk.item.metadata?.description)
                 : '',
               url: chunk.item.key,
-              image: chunk.item.metadata.image || undefined,
+              image: chunk.item.metadata?.image || undefined,
               metadata: chunk.item.metadata as unknown as Record<string, unknown>,
             }) satisfies SearchResult
         );
