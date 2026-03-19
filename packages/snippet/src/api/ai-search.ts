@@ -7,14 +7,21 @@ import type {
   AISearchAPIResponse,
   ChatTextResponse,
   ChatTypes,
+  RequestState,
   SearchError,
   SearchOptions,
   SearchResult,
 } from '../types/index.ts';
 import { decodeHTMLEntities } from '../utils/index.ts';
-import { Client } from './index.ts';
 
-export class AISearchClient extends Client {
+export class AISearchClient {
+  activeRequests: Map<string, RequestState> = new Map();
+  baseUrl: string;
+
+  constructor(baseUrl: string) {
+    this.baseUrl = baseUrl.replace(/\/$/, ''); // Remove trailing slash
+  }
+
   private request(
     options: SearchOptions = {},
     operation: 'ai-search' | 'search' | 'chat/completions',

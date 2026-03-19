@@ -3,7 +3,7 @@
  * A full-page chat interface with history support
  */
 
-import type { Client } from '../api/index.ts';
+import type { AISearchClient } from '../api/ai-search.ts';
 import { POWERED_BY_BRANDING } from '../constants.ts';
 import { chatStyles } from '../styles/chat.ts';
 import { baseStyles } from '../styles/theme.ts';
@@ -30,7 +30,7 @@ interface ChatSession {
 
 export class ChatPageSnippet extends HTMLElement {
   private shadow: ShadowRoot;
-  private client: Client | null = null;
+  private client: AISearchClient | null = null;
   private chatView: ChatView | null = null;
   private container: HTMLElement | null = null;
   private sessions: ChatSession[] = [];

@@ -3,7 +3,6 @@
  */
 
 import { AISearchClient } from '../api/ai-search.ts';
-import type { Client } from '../api/index.ts';
 
 export { LOADING_MESSAGE_INTERVAL_MS, LOADING_MESSAGES } from './loading-messages.ts';
 
@@ -127,7 +126,7 @@ export function createCustomEvent<T>(name: string, detail: T): CustomEvent<T> {
 /**
  * Create API client
  */
-export function createClient(apiUrl: string): Client {
+export function createClient(apiUrl: string): AISearchClient {
   if (!apiUrl) {
     throw new Error('API URL is required');
   }

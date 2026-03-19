@@ -3,7 +3,7 @@
  * Handles chat interface with streaming support
  */
 
-import type { Client } from '../api/index.ts';
+import type { AISearchClient } from '../api/ai-search.ts';
 import type { SearchSnippetProps } from '../types/index.ts';
 import {
   createCustomEvent,
@@ -23,7 +23,7 @@ export interface Message {
 }
 export class ChatView {
   private container: HTMLElement;
-  private client: Client;
+  private client: AISearchClient;
   private props: SearchSnippetProps;
   private inputElement: HTMLTextAreaElement | null = null;
   private messagesContainer: HTMLElement | null = null;
@@ -39,7 +39,7 @@ export class ChatView {
   private handleInputKeydown: ((e: KeyboardEvent) => void) | null = null;
   private handleSendClick: (() => void) | null = null;
 
-  constructor(container: HTMLElement, client: Client, props: SearchSnippetProps) {
+  constructor(container: HTMLElement, client: AISearchClient, props: SearchSnippetProps) {
     this.container = container;
     this.client = client;
     this.props = props;

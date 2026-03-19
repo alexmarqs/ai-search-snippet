@@ -3,7 +3,7 @@
  * A search bar with results display
  */
 
-import type { Client } from '../api/index.ts';
+import type { AISearchClient } from '../api/ai-search.ts';
 import { POWERED_BY_BRANDING } from '../constants.ts';
 import { searchStyles } from '../styles/search.ts';
 import { baseStyles } from '../styles/theme.ts';
@@ -24,7 +24,7 @@ const COMPONENT_NAME = 'search-bar-snippet';
 
 export class SearchBarSnippet extends HTMLElement {
   private shadow: ShadowRoot;
-  private client: Client | null = null;
+  private client: AISearchClient | null = null;
   private container: HTMLElement | null = null;
   private inputElement: HTMLInputElement | null = null;
   private resultsContainer: HTMLElement | null = null;

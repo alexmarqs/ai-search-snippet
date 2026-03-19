@@ -4,7 +4,7 @@
  * Opens with Cmd/Ctrl+K shortcut by default
  */
 
-import type { Client } from '../api/index.ts';
+import type { AISearchClient } from '../api/ai-search.ts';
 import { POWERED_BY_BRANDING } from '../constants.ts';
 import { modalStyles } from '../styles/modal.ts';
 import { baseStyles } from '../styles/theme.ts';
@@ -32,7 +32,7 @@ export interface SearchModalProps extends SearchSnippetProps {
 
 export class SearchModalSnippet extends HTMLElement {
   private shadow: ShadowRoot;
-  private client: Client | null = null;
+  private client: AISearchClient | null = null;
   private backdrop: HTMLElement | null = null;
   private modal: HTMLElement | null = null;
   private inputElement: HTMLInputElement | null = null;
