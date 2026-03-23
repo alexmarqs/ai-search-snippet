@@ -43,6 +43,8 @@ yarn add @cloudflare/ai-search-snippet
   api-url="https:/<hash>/search.ai.cloudflare.com/"
   placeholder="Search..."
   max-results="10"
+  show-url="true"
+  show-date="true"
 >
 </search-bar-snippet>
 
@@ -51,6 +53,8 @@ yarn add @cloudflare/ai-search-snippet
   api-url="https:/<hash>/search.ai.cloudflare.com/"
   placeholder="Search documentation..."
   max-results="10"
+  show-url="true"
+  show-date="true"
 >
 </search-modal-snippet>
 
@@ -97,11 +101,12 @@ These attributes are available on all components:
 
 Additional attributes for `<search-bar-snippet>` and `<search-modal-snippet>`:
 
-| Attribute     | Type    | Default | Description                          |
-| ------------- | ------- | ------- | ------------------------------------ |
-| `max-results` | number  | `10`    | Maximum search results to display    |
-| `debounce-ms` | number  | `300`   | Input debounce delay in milliseconds |
-| `show-url`    | boolean | `false` | Show URL in search results           |
+| Attribute     | Type    | Default | Description                                      |
+| ------------- | ------- | ------- | ------------------------------------------------ |
+| `max-results` | number  | `10`    | Maximum search results to display                |
+| `debounce-ms` | number  | `300`   | Input debounce delay in milliseconds             |
+| `show-url`    | boolean | `false` | Show URL in search results                       |
+| `show-date`   | boolean | `false` | Show result dates when a timestamp is available  |
 
 ### Modal-Specific Attributes
 

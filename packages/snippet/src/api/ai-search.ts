@@ -85,6 +85,7 @@ export class AISearchClient {
               description: chunk.item.metadata?.description
                 ? decodeHTMLEntities(chunk.item.metadata?.description)
                 : '',
+              timestamp: chunk.item.timestamp ?? undefined,
               url: chunk.item.key,
               image: chunk.item.metadata?.image || undefined,
               metadata: chunk.item.metadata as unknown as Record<string, unknown>,

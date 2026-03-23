@@ -254,15 +254,35 @@ a.modal-result-item:focus-visible {
   overflow: hidden;
 }
 
+.modal-result-metadata {
+  display: flex;
+  align-items: center;
+  gap: var(--search-snippet-spacing-sm);
+  min-width: 0;
+}
+
 .modal-result-url {
   font-size: var(--search-snippet-font-size-sm);
   color: var(--search-snippet-primary-color);
   text-decoration: none;
-  display: inline-block;
-  max-width: 100%;
+  display: block;
+  flex: 1;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.modal-result-url-empty {
+  visibility: hidden;
+}
+
+.modal-result-date {
+  font-size: 12px;
+  font-weight: var(--search-snippet-font-weight-medium);
+  color: var(--search-snippet-text-secondary);
+  text-align: right;
+  flex-shrink: 0;
 }
 
 .modal-result-url:hover {

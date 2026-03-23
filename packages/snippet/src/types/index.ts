@@ -22,6 +22,8 @@ export interface SearchSnippetProps {
   hideBranding?: boolean;
   /** Show URL in search results (default: false) */
   showUrl?: boolean;
+  /** Show date in search results when timestamp is present (default: false) */
+  showDate?: boolean;
   /** Hide thumbnails in search results (default: false) */
   hideThumbnails?: boolean;
   /** URL template for "See more" link. The search query is appended URL-encoded. Example: "https://example.com/search?q=" */
@@ -35,6 +37,7 @@ export interface SearchResult {
   id: string;
   title: string;
   description: string;
+  timestamp?: number;
   url?: string;
   image?: string;
   metadata?: Record<string, unknown>;

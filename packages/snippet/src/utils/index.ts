@@ -86,6 +86,13 @@ export function formatTimestamp(timestamp: number): string {
   });
 }
 
+export function formatDate(timestamp: number): string {
+  return new Date(timestamp).toLocaleDateString(undefined, {
+    month: 'short',
+    day: 'numeric',
+  });
+}
+
 /**
  * Generate unique ID
  */

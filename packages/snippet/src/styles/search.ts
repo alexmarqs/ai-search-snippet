@@ -248,12 +248,36 @@ a.search-result-item:focus-visible {
   overflow: hidden;
 }
 
+.search-result-metadata {
+  display: flex;
+  align-items: center;
+  gap: var(--search-snippet-spacing-sm);
+  margin-top: var(--search-snippet-spacing-xs);
+  min-width: 0;
+}
+
 .search-result-url {
   font-size: var(--search-snippet-font-size-sm);
   color: var(--search-snippet-primary-color);
-  margin-top: var(--search-snippet-spacing-xs);
   text-decoration: none;
-  display: inline-block;
+  display: block;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-result-url-empty {
+  visibility: hidden;
+}
+
+.search-result-date {
+  font-size: 12px;
+  font-weight: var(--search-snippet-font-weight-medium);
+  color: var(--search-snippet-text-secondary);
+  text-align: right;
+  flex-shrink: 0;
 }
 
 .search-result-url:hover {

@@ -13,6 +13,7 @@ import {
   createCustomEvent,
   debounce,
   escapeHTML,
+  formatDate,
   LOADING_MESSAGE_INTERVAL_MS,
   LOADING_MESSAGES,
   parseAttribute,
@@ -49,6 +50,7 @@ export class SearchBarSnippet extends HTMLElement {
       'theme',
       'hide-branding',
       'show-url',
+      'show-date',
       'hide-thumbnails',
       'see-more',
     ] as const;
@@ -90,6 +92,7 @@ export class SearchBarSnippet extends HTMLElement {
       theme: parseAttribute(this.getAttribute('theme'), 'auto') as 'light' | 'dark' | 'auto',
       hideBranding: parseBooleanAttribute(this.getAttribute('hide-branding'), false),
       showUrl: parseBooleanAttribute(this.getAttribute('show-url'), false),
+      showDate: parseBooleanAttribute(this.getAttribute('show-date'), false),
       hideThumbnails: parseBooleanAttribute(this.getAttribute('hide-thumbnails'), false),
       seeMore: parseAttribute(this.getAttribute('see-more'), ''),
     };
@@ -284,6 +287,17 @@ export class SearchBarSnippet extends HTMLElement {
       ? ''
       : this.renderResultImage(result.image, result.title);
     const href = result.url ? escapeHTML(result.url) : '#';
+    const timestampHTML =
+      props.showDate && result.timestamp !== undefined
+        ? `<div class="search-result-date">${escapeHTML(formatDate(result.timestamp))}</div>`
+        : '';
+    const metadataHTML =
+      (props.showUrl && result.url) || timestampHTML
+        ? `<div class="search-result-metadata">
+            ${props.showUrl && result.url ? `<span class="search-result-url">${escapeHTML(result.url)}</span>` : '<span class="search-result-url search-result-url-empty"></span>'}
+            ${timestampHTML}
+          </div>`
+        : '';
 
     return `
             <a href="${href}" class="search-result-item" data-result-id="${escapeHTML(result.url || '')}">
@@ -291,7 +305,7 @@ export class SearchBarSnippet extends HTMLElement {
                 <div class="search-result-content">
                     <div class="search-result-title">${escapeHTML(result.title || '')}</div>
                     <div class="search-result-snippet">${escapeHTML(result.description || '')}</div>
-                    ${props.showUrl && result.url ? `<span class="search-result-url">${escapeHTML(result.url)}</span>` : ''}
+                    ${metadataHTML}
                 </div>
             </a>
         `;

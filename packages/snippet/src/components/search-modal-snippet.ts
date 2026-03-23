@@ -14,6 +14,7 @@ import {
   createCustomEvent,
   debounce,
   escapeHTML,
+  formatDate,
   LOADING_MESSAGE_INTERVAL_MS,
   LOADING_MESSAGES,
   parseAttribute,
@@ -72,6 +73,7 @@ export class SearchModalSnippet extends HTMLElement {
       'debounce-ms',
       'hide-branding',
       'show-url',
+      'show-date',
       'hide-thumbnails',
       'see-more',
     ] as const;
@@ -114,6 +116,7 @@ export class SearchModalSnippet extends HTMLElement {
       useMetaKey: this.getAttribute('use-meta-key') !== 'false',
       hideBranding: parseBooleanAttribute(this.getAttribute('hide-branding'), false),
       showUrl: parseBooleanAttribute(this.getAttribute('show-url'), false),
+      showDate: parseBooleanAttribute(this.getAttribute('show-date'), false),
       hideThumbnails: parseBooleanAttribute(this.getAttribute('hide-thumbnails'), false),
       seeMore: parseAttribute(this.getAttribute('see-more'), ''),
     };
@@ -424,6 +427,17 @@ export class SearchModalSnippet extends HTMLElement {
       ? ''
       : this.renderResultImage(result.image, result.title);
     const href = result.url ? escapeHTML(result.url) : '#';
+    const timestampHTML =
+      props.showDate && result.timestamp !== undefined
+        ? `<div class="modal-result-date">${escapeHTML(formatDate(result.timestamp))}</div>`
+        : '';
+    const metadataHTML =
+      (props.showUrl && result.url) || timestampHTML
+        ? `<div class="modal-result-metadata">
+            ${props.showUrl && result.url ? `<span class="modal-result-url">${escapeHTML(result.url)}</span>` : '<span class="modal-result-url modal-result-url-empty"></span>'}
+            ${timestampHTML}
+          </div>`
+        : '';
 
     return `
       <a 
@@ -440,7 +454,7 @@ export class SearchModalSnippet extends HTMLElement {
         <div class="modal-result-content">
           <div class="modal-result-title">${escapeHTML(result.title || '')}</div>
           ${result.description ? `<div class="modal-result-description">${escapeHTML(result.description)}</div>` : ''}
-          ${props.showUrl && result.url ? `<span class="modal-result-url">${escapeHTML(result.url)}</span>` : ''}
+          ${metadataHTML}
         </div>
       </a>
     `;
