@@ -2337,7 +2337,7 @@
                     </div>
                     <div class="code-content">
                         <pre class="language-html"><code class="language-html">&lt;!-- Import the library --&gt;
-&lt;script type="module" src="https://&lt;hash&gt;.search.ai.cloudflare.com/assets/v0.0.27/search-snippet.es.js"&gt;&lt;/script&gt;
+&lt;script type="module" src="https://&lt;hash&gt;.search.ai.cloudflare.com/assets/v0.0.28/search-snippet.es.js"&gt;&lt;/script&gt;
 
 &lt;!-- 1. Chat Bubble Widget (Fixed bottom-right) --&gt;
 &lt;chat-bubble-snippet 
@@ -4047,7 +4047,7 @@ export default defineConfig({
 
             // Use string concatenation to avoid Vite HTML parser issues with template literals
             let code = '<!-' + '- Import the library -' + '->\n';
-            code += '<' + `script type="module" src="https://${hash}.search.ai.cloudflare.com/assets/v0.0.27/search-snippet.es.js"><` + '/script>\n\n';
+            code += '<' + `script type="module" src="https://${hash}.search.ai.cloudflare.com/assets/v0.0.28/search-snippet.es.js"><` + '/script>\n\n';
             code += `<${tag}${propsStr}>\n`;
             code += `</${tag}>`;
             if (cssCode) {
