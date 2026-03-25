@@ -1,0 +1,140 @@
+---
+import { SNIPPETS } from '../data/snippets.ts';
+---
+
+<div class="config-modal-overlay" id="configModal" data-config-modal>
+  <div class="config-modal">
+    <button class="config-modal-close" data-config-close aria-label="Close configurator" type="button">
+      &times;
+    </button>
+    <div class="configurator">
+      <div class="config-tabs">
+        {
+          SNIPPETS.map((snippet, index) => (
+            <button
+              class={index === 0 ? 'config-tab active' : 'config-tab'}
+              data-snippet-tab={snippet.id}
+              type="button"
+            >
+              {snippet.tabLabel}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="config-body">
+        <div class="config-panel">
+          <div class="config-actions">
+            <button class="config-btn" data-config-reset type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                <path d="M3 3v5h5" />
+              </svg>
+              Reset
+            </button>
+          </div>
+
+          <div class="config-section">
+            <h3 class="config-section-title">Props</h3>
+            <div data-props-container></div>
+          </div>
+
+          <div class="config-section">
+            <h3 class="config-section-title">CSS Variables</h3>
+            <div class="theme-mode-toggle">
+              <button class="theme-mode-btn active" data-theme-mode="light" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" />
+                  <line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+                Light
+              </button>
+              <button class="theme-mode-btn" data-theme-mode="dark" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+                Dark
+              </button>
+            </div>
+            <div data-css-vars-container></div>
+          </div>
+        </div>
+
+        <div class="preview-area">
+          <div class="preview-section">
+            <h3 class="preview-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              Live Preview
+            </h3>
+            <div class="preview-container" data-preview-container></div>
+          </div>
+
+          <div class="code-section">
+            <h3 class="preview-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="16 18 22 12 16 6" />
+                <polyline points="8 6 2 12 8 18" />
+              </svg>
+              Generated Code
+            </h3>
+            <div class="quickstart-tabs">
+              <button class="quickstart-tab active" data-config-code-tab="html" type="button">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.23-2.622L5.412 4.41l.698 8.01h9.126l-.326 3.426-2.91.804-2.955-.81-.188-2.11H6.248l.33 4.171L12 19.351l5.379-1.443.744-8.157H8.531z" />
+                </svg>
+                HTML
+              </button>
+              <button class="quickstart-tab" data-config-code-tab="react" type="button">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278z" />
+                </svg>
+                React
+              </button>
+              <button class="quickstart-tab" data-config-code-tab="vue" type="button">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24,1.61H14.06L12,5.16,9.94,1.61H0L12,22.39ZM12,14.08,5.16,2.23H9.59L12,6.41l2.41-4.18h4.43Z" />
+                </svg>
+                Vue
+              </button>
+            </div>
+
+            <div class="quickstart-panel active" data-config-code-panel="html">
+              <div class="code-header">
+                <span class="code-title">index.html</span>
+                <button class="code-copy" data-copy-config-code="html" type="button">Copy</button>
+              </div>
+              <pre class="code-output language-html"><code class="language-html" data-generated-code="html"></code></pre>
+            </div>
+
+            <div class="quickstart-panel" data-config-code-panel="react">
+              <div class="code-header">
+                <span class="code-title">App.tsx</span>
+                <button class="code-copy" data-copy-config-code="react" type="button">Copy</button>
+              </div>
+              <pre class="code-output language-jsx"><code class="language-jsx" data-generated-code="react"></code></pre>
+            </div>
+
+            <div class="quickstart-panel" data-config-code-panel="vue">
+              <div class="code-header">
+                <span class="code-title">App.vue</span>
+                <button class="code-copy" data-copy-config-code="vue" type="button">Copy</button>
+              </div>
+              <pre class="code-output language-html"><code class="language-html" data-generated-code="vue"></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../scripts/configurator.ts"></script>
+</div>

@@ -1,0 +1,28 @@
+---
+import { API_REFERENCE_SECTIONS } from '../data/reference.ts';
+import ReferenceTable from './ReferenceTable.astro';
+import SectionHeader from './SectionHeader.astro';
+---
+
+<section class="section" id="component-api">
+  <SectionHeader
+    title="Component API Reference"
+    description="HTML attributes (props) and JavaScript methods available for each component."
+  />
+
+  <div class="css-vars-section">
+    {
+      API_REFERENCE_SECTIONS.map((section) => (
+        <div class="css-vars-category" id={section.id}>
+          <h4>{section.title}</h4>
+          {section.description && <p class="reference-note">{section.description}</p>}
+          {
+            section.tables.map((table) => (
+              <ReferenceTable table={table} />
+            ))
+          }
+        </div>
+      ))
+    }
+  </div>
+</section>

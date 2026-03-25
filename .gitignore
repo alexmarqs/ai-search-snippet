@@ -13,6 +13,7 @@ dist-app
 dist-ssr
 *.local
 .wrangler
+**/.astro/
 
 # Editor directories and files
 .vscode/*

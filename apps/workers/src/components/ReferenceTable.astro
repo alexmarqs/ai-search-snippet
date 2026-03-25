@@ -1,0 +1,49 @@
+---
+import type { ReferenceTableData } from '../data/reference.ts';
+
+interface Props {
+  table: ReferenceTableData;
+}
+
+const { table } = Astro.props;
+
+function isCodeColumn(index: number): boolean {
+  return table.codeColumns?.includes(index) ?? false;
+}
+
+function isDefaultColumn(index: number): boolean {
+  return table.defaultColumns?.includes(index) ?? false;
+}
+---
+
+{table.title && <h5 class="reference-subtitle">{table.title}</h5>}
+
+<div class="table-wrapper">
+  <table class="css-vars-table">
+    <thead>
+      <tr>
+        {
+          table.columns.map((column) => <th>{column}</th>)
+        }
+      </tr>
+    </thead>
+    <tbody>
+      {
+        table.rows.map((row) => (
+          <tr>
+            {
+              row.map((cell, index) => (
+                <td
+                  class={isDefaultColumn(index) ? 'var-default' : undefined}
+                  data-label={table.columns[index]}
+                >
+                  {isCodeColumn(index) ? <code>{cell}</code> : cell}
+                </td>
+              ))
+            }
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,30 @@
+---
+import { CSS_VARIABLE_SECTIONS } from '../data/reference.ts';
+import ReferenceTable from './ReferenceTable.astro';
+---
+
+<section class="section" id="css-variables">
+  <div class="section-header">
+    <h2>CSS Variables Reference</h2>
+    <p>
+      Customize every aspect of the components using CSS custom properties. All variables use the
+      <code class="inline-code">--search-snippet-</code>
+      prefix.
+    </p>
+  </div>
+
+  <div class="css-vars-section">
+    {
+      CSS_VARIABLE_SECTIONS.map((section) => (
+        <div class="css-vars-category" id={section.id}>
+          <h4>{section.title}</h4>
+          {
+            section.tables.map((table) => (
+              <ReferenceTable table={table} />
+            ))
+          }
+        </div>
+      ))
+    }
+  </div>
+</section>

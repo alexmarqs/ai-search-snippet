@@ -1,0 +1,30 @@
+---
+import ApiReferenceSection from '../components/ApiReferenceSection.astro';
+import ConfiguratorModal from '../components/ConfiguratorModal.astro';
+import CssVariablesSection from '../components/CssVariablesSection.astro';
+import FeaturesSection from '../components/FeaturesSection.astro';
+import GlobalSearchModal from '../components/GlobalSearchModal.astro';
+import HeroSection from '../components/HeroSection.astro';
+import QuickStartSection from '../components/QuickStartSection.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SnippetCatalog from '../components/SnippetCatalog.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+  <SiteHeader />
+  <HeroSection />
+
+  <main class="main-content">
+    <SnippetCatalog />
+    <ConfiguratorModal />
+    <QuickStartSection />
+    <FeaturesSection />
+    <ApiReferenceSection />
+    <CssVariablesSection />
+  </main>
+
+  <SiteFooter />
+  <GlobalSearchModal />
+</BaseLayout>

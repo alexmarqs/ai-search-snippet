@@ -1,0 +1,21 @@
+---
+import type { SnippetId } from '../data/snippets.ts';
+
+interface Props {
+  description: string;
+  snippetId: SnippetId;
+  title: string;
+}
+
+const { description, snippetId, title } = Astro.props;
+---
+
+<button class="component-card" data-open-configurator data-snippet={snippetId} type="button">
+  <div class="component-preview">
+    <slot />
+  </div>
+  <div class="content">
+    <h4>{title}</h4>
+    <p>{description}</p>
+  </div>
+</button>

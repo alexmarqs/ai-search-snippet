@@ -1,0 +1,58 @@
+---
+import SectionHeader from './SectionHeader.astro';
+---
+
+<section class="section" id="features">
+  <SectionHeader
+    title="Why AI Search?"
+    description="Everything you need to add intelligent search to your applications."
+  />
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12,6 12,12 16,14" />
+      </svg>
+      <h4>Deploy in minutes</h4>
+      <p>Production-ready components out of the box. Just import and use.</p>
+    </div>
+    <div class="feature-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 10H3M21 12.5V8.8C21 7.12 21 6.28 20.673 5.638C20.385 5.074 19.927 4.615 19.362 4.327C18.72 4 17.88 4 16.2 4H7.8C6.12 4 5.28 4 4.638 4.327C4.074 4.615 3.615 5.074 3.327 5.638C3 6.28 3 7.12 3 8.8V17.2C3 18.88 3 19.72 3.327 20.362C3.615 20.927 4.074 21.385 4.638 21.673C5.28 22 6.12 22 7.8 22H12M16 2V6M8 2V6M14.5 19L16.5 21L21 16.5" />
+      </svg>
+      <h4>Always up-to-date</h4>
+      <p>Continuously indexes your data so responses reflect the latest information.</p>
+    </div>
+    <div class="feature-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 4.5H18.3C19.42 4.5 19.98 4.5 20.408 4.718C20.784 4.91 21.09 5.216 21.282 5.592C21.5 6.02 21.5 6.58 21.5 7.7V9C21.5 9.932 21.5 10.398 21.348 10.765C21.145 11.255 20.755 11.645 20.265 11.848C19.898 12 19.432 12 18.5 12M13 19.5H5.7C4.58 19.5 4.02 19.5 3.592 19.282C3.216 19.09 2.91 18.784 2.718 18.408C2.5 17.98 2.5 17.42 2.5 16.3V15C2.5 14.068 2.5 13.602 2.652 13.235C2.855 12.745 3.245 12.355 3.735 12.152C4.102 12 4.568 12 5.5 12M10.3 14.5H13.7C13.98 14.5 14.12 14.5 14.227 14.446C14.321 14.398 14.398 14.321 14.446 14.227C14.5 14.12 14.5 13.98 14.5 13.7V10.3C14.5 10.02 14.5 9.88 14.446 9.773C14.398 9.679 14.321 9.602 14.227 9.555C14.12 9.5 13.98 9.5 13.7 9.5H10.3C10.02 9.5 9.88 9.5 9.773 9.555C9.679 9.602 9.602 9.679 9.555 9.773C9.5 9.88 9.5 10.02 9.5 10.3V13.7C9.5 13.98 9.5 14.12 9.555 14.227C9.602 14.321 9.679 14.398 9.773 14.446C9.88 14.5 10.02 14.5 10.3 14.5Z" />
+      </svg>
+      <h4>Edge-based inference</h4>
+      <p>Runs at the edge, closer to users for reduced latency.</p>
+    </div>
+    <div class="feature-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <path d="M3 9h18M9 21V9" />
+      </svg>
+      <h4>Framework agnostic</h4>
+      <p>Works with React, Vue, Angular, or vanilla JavaScript.</p>
+    </div>
+    <div class="feature-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+      </svg>
+      <h4>Zero dependencies</h4>
+      <p>Self-contained Web Components with everything bundled.</p>
+    </div>
+    <div class="feature-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3" />
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+      </svg>
+      <h4>Fully customizable</h4>
+      <p>50+ CSS variables for complete theme control.</p>
+    </div>
+  </div>
+</section>
