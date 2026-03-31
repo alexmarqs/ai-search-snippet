@@ -76,7 +76,7 @@ export class AISearchClient {
       }
       const result: AISearchAPIResponse = await response.json();
       if (result.success && result.result) {
-        return result.result.chunks.slice(0, 10).map(
+        return result.result.chunks.map(
           (chunk) =>
             ({
               type: 'result',

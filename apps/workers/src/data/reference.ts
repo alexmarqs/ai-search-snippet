@@ -13,7 +13,7 @@ export interface ReferenceSectionData {
   tables: readonly ReferenceTableData[];
 }
 
-export const  API_REFERENCE_SECTIONS: readonly ReferenceSectionData[] = [
+export const API_REFERENCE_SECTIONS: readonly ReferenceSectionData[] = [
   {
     id: 'props-common',
     title: 'Common Props (All Components)',

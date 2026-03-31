@@ -22,6 +22,8 @@ import {
 } from '../utils/index.ts';
 
 const COMPONENT_NAME = 'search-bar-snippet';
+const DEFAULT_DISPLAY_RESULTS = 10;
+const REQUEST_MAX_RESULTS = 100;
 
 export class SearchBarSnippet extends HTMLElement {
   private shadow: ShadowRoot;
@@ -237,8 +239,11 @@ export class SearchBarSnippet extends HTMLElement {
       const results = await this.client.search(query, {
         streaming: false,
         signal: this.currentSearchController.signal,
+        maxResults: REQUEST_MAX_RESULTS
       });
-      this.displayResults(results, query);
+      const props = this.getProps();
+      const visibleResults = results.slice(0, props.maxResults || DEFAULT_DISPLAY_RESULTS);
+      this.displayResults(visibleResults, query, results.length);
     } catch (error) {
       // Don't show error state for cancelled requests
       if ((error as Error).name === 'AbortError') {
@@ -250,7 +255,11 @@ export class SearchBarSnippet extends HTMLElement {
     }
   }
 
-  private displayResults(results: SearchResult[], query: string): void {
+  private displayResults(
+    results: SearchResult[],
+    query: string,
+    totalResults = results.length
+  ): void {
     this.clearLoadingInterval();
     if (!this.resultsContainer) return;
 
@@ -262,20 +271,25 @@ export class SearchBarSnippet extends HTMLElement {
     const brandingHTML = props.hideBranding
       ? ''
       : `<div class="powered-by-inline">${POWERED_BY_BRANDING}</div>`;
+    const hasMoreResults = totalResults > results.length;
+    const resultsCountLabel = hasMoreResults
+      ? `Showing ${results.length} of ${totalResults} results`
+      : `Found ${totalResults} result${totalResults === 1 ? '' : 's'}`;
 
-    const seeMoreHTML = props.seeMore
-      ? `<div class="search-footer">
+    const seeMoreHTML =
+      props.seeMore && hasMoreResults
+        ? `<div class="search-footer">
             <a href="${escapeHTML(props.seeMore + encodeURIComponent(query))}" class="search-see-more">
               <span>See more results</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </a>
           </div>`
-      : '';
+        : '';
 
     const resultsHTML = `
             <div class="search-header">
                 <div class="search-count">
-                    Found ${results.length} result${results.length === 1 ? '' : 's'}
+                    ${resultsCountLabel}
                 </div>
                 ${brandingHTML}
             </div>

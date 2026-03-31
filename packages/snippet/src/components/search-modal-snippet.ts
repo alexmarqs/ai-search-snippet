@@ -23,6 +23,8 @@ import {
 } from '../utils/index.ts';
 
 const COMPONENT_NAME = 'search-modal-snippet';
+const DEFAULT_DISPLAY_RESULTS = 10;
+const REQUEST_MAX_RESULTS = 100;
 
 export interface SearchModalProps extends SearchSnippetProps {
   /** Keyboard shortcut key (default: 'k') */
@@ -378,11 +380,12 @@ export class SearchModalSnippet extends HTMLElement {
       const results = await this.client.search(query, {
         streaming: false,
         signal: this.currentSearchController.signal,
+        maxResults: REQUEST_MAX_RESULTS,
       });
       const props = this.getProps();
-      this.results = results.slice(0, props.maxResults || 10);
+      this.results = results.slice(0, props.maxResults || DEFAULT_DISPLAY_RESULTS);
       this.activeIndex = this.results.length > 0 ? 0 : -1;
-      this.displayResults(this.results, query);
+      this.displayResults(this.results, query, results.length);
     } catch (error) {
       // Don't show error state for cancelled requests
       if ((error as Error).name === 'AbortError') {
@@ -394,7 +397,12 @@ export class SearchModalSnippet extends HTMLElement {
     }
   }
 
-  private displayResults(results: SearchResult[], query: string): void {
+  private displayResults(
+    results: SearchResult[],
+    query: string,
+    totalResults = results.length
+  ): void {
+    console.log({ results, query, totalResults });
     this.clearLoadingInterval();
     if (!this.resultsContainer) return;
 
@@ -405,18 +413,23 @@ export class SearchModalSnippet extends HTMLElement {
 
     const props = this.getProps();
     const resultsHTML = results.map((result, index) => this.renderResult(result, index)).join('');
-    const seeMoreHTML = props.seeMore
-      ? `<a href="${escapeHTML(props.seeMore + encodeURIComponent(query))}" class="modal-see-more">
+    const hasMoreResults = totalResults > results.length;
+    const resultsCountLabel = hasMoreResults
+      ? `Showing ${results.length} of ${totalResults} results`
+      : `${totalResults} result${totalResults === 1 ? '' : 's'}`;
+    const seeMoreHTML =
+      props.seeMore && hasMoreResults
+        ? `<a href="${escapeHTML(props.seeMore + encodeURIComponent(query))}" class="modal-see-more">
             <span>See more results</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>`
-      : '';
+        : '';
 
     this.resultsContainer.innerHTML = resultsHTML + seeMoreHTML;
 
     // Update footer count
     if (this.footerCount) {
-      this.footerCount.textContent = `${results.length} result${results.length === 1 ? '' : 's'}`;
+      this.footerCount.textContent = resultsCountLabel;
     }
 
     // Update aria-expanded

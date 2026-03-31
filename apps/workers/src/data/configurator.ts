@@ -47,7 +47,7 @@ export function createPropConfigs(defaultApiUrl = ''): readonly PropConfig[] {
       name: 'max-results',
       type: 'number',
       defaultValue: 10,
-      description: 'Maximum number of results',
+      description: 'Maximum number of displayed results',
       appliesTo: ['search-bar', 'search-modal'],
     },
     {
