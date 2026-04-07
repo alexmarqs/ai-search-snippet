@@ -41,7 +41,7 @@ function App() {
         Show Modal Search (CMD+K)
       </button>
 
-      <search-modal-snippet api-url="http://localhost:8787" ref={searchModalRef} />
+      <search-modal-snippet apiUrl="http://localhost:8787" ref={searchModalRef} />
     </>
   );
 }
